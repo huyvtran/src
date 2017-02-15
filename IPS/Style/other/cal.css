@@ -1,0 +1,274 @@
+/**** 신고 납부 컨텐츠영역 설정 ****/
+
+/* 2008.02.14
+전체서브메뉴에대한 광역설정입니다.
+컨텐츠 영역 div까지 설정이 되어있으며 컨텐츠 영역내 컨텐츠에 대한 선언은 되어있지 않습니다.
+광역설정에 관련되지 않은 내용은 css 추가를 삼가해주시고, 컨텐츠 및 그외의 내용에 적용할 css는
+각 서브메뉴의 css에 선언하여 적용해 주세요.
+*/
+
+/* 기본 링크색상 설정 - 이 설정을 바꾸면 국세정보에 관련된 모든 페이지의 링크가 변경이 됩니다.
+지역적인 링크변경이 필요하실 경우 id, class 별 a 링크설정을 하여 운영 해주세요.
+
+A:link	{color:#505050;text-decoration:none;}
+A:visited {color:#505050;text-decoration:none;}
+A:active  {color:#505050;text-decoration:none;}
+A:hover  {color:#000000;text-decoration:underline;}
+ */
+
+/*------------------------------------------------------------------------------------------*/
+
+/**** 컨텐츠 설정 ****/
+/*2Depth 타이틀*/
+#cont { float:left; width:708px; margin:10px 0; }
+#cont_title_2depth { background:url(../images/news/bg_cont_title_2depth.gif) repeat-x left bottom; }
+#current_navi {height:11px; }
+/*2Depth 타이틀 끝*/
+
+/*3Depth 타이틀*/
+#cont_title_3depth { background:url(../images/news/bullet_title_3depth_01.gif) no-repeat left center; border-bottom:1px solid #D5D5D5; height:30px; padding-left:17px;}
+/*3Depth 타이틀 끝*/
+
+/*컨텐츠 시작*/
+#cont_board { margin-top:20px; }
+#cont_board_area { margin-bottom:20px; }/*4Depth 메뉴에서의 게시판 혹은, 상단에 컨텐츠를 포함한 게시판 모드*/
+
+#cont_area { margin-top:20px;}
+.cont_area { margin-top:20px;}
+/*cont_wrap_* 영역은 컨텐츠의 주요설명을 나타내는 영역선언.
+*/
+#cont_wrap_01 { font:normal 12px dotum, tahoma; color:#0063a4; line-height:20px; border:1px solid #cccccc; margin:5px 0; padding:15px; }
+/*#cont_wrap_01 { font:normal 12px dotum, tahoma; color:#FFFFFF; line-height:20px; border:3px solid #303030; background:#484848; margin:5px 0; padding:5px; }*/
+
+#cont_title_4depth { background:url(../images/cal/bullet_title_4depth_01.gif) no-repeat left 4px; font-weight:bold; padding-left:15px; padding-bottom:10px; }
+#cont_title_group { background:url(../images/cal/bullet_cont_title_01.gif) no-repeat left center; font-weight:bold; color:#0063a4; padding-left:15px; }
+.cont_title_group { background:url(../images/cal/bullet_cont_title_01.gif) no-repeat left center; font-weight:bold; color:#0063a4; padding-left:15px; }
+/*cont_group 은 4depth 의 indent를 위해 사용하는 영역선언이며 cont_board_group 은 게시판이 들어가는 페이지에서 게시판의 708px 영역에 맞추어진 ID값.
+필요에 따라 cont_group ID를 cont_board_group 으로 대체하여 사용할 것.
+*/
+
+#cont_group { margin-left:0; margin-bottom:10px;}
+.cont_group { margin-left:0; margin-bottom:10px;}
+
+/*컨텐츠에 사용되는 탭 정의 01*/
+#cont_tab_01 { text-align:center;}
+#cont_tab_01 td,th { padding:0 5px; border-bottom:2px solid #cccccc; }
+#cont_tab_01 a { background:url(../images/cal/bullet_orange_01.gif) no-repeat left center; padding-left:5px; }
+.cont_tab_01  { background:url(../images/info/bg_tab_01.gif) repeat-x left top;height:31px; font:bold 12px dotum, tahoma; color:#666666;border-left:1px solid #cccccc;border-right:1px solid #cccccc;border-top:1px solid #cccccc;}
+
+.cont_title_group_1  { background:url(../images/cal/bullet_cont_title_01.gif) repeat-x left top; font:bold 12px dotum, tahoma; color:#FFFFFF; }
+
+/*컨텐츠 영역에 들어가는 테이블 형식 01*/
+#cont_table_01 { margin-top:5px; margin-bottom:15px;}
+#cont_table_01 td,th { padding:0 5px; border-bottom:1px solid #EAEAEA; height:31px; }
+#cont_table_01 .top { background:url(../images/cal/bg_cont_top_01.gif) repeat-x; height:3px; }
+#cont_table_01 .tp { padding:10px 5px; border-bottom:1px solid #EAEAEA; } 
+#cont_table_01 .view{background:#F9F9F9;padding:10px; border-top:2px solid #F4F4F4;}
+/* class 추가 */
+.cont_table_01 { margin-top:5px; margin-bottom:15px;}
+.cont_table_01 td,th { padding:0 5px; border-bottom:1px solid #EAEAEA; height:31px; }
+.cont_table_01 .top { background:url(../images/cal/bg_cont_top_01.gif) repeat-x; height:3px; }
+.cont_table_01 .tp { padding:10px 5px; border-bottom:1px solid #EAEAEA; } 
+.cont_table_01 .view{background:#F9F9F9;padding:10px; border-top:2px solid #F4F4F4;}
+/*컨텐츠 끝*/
+
+/*컨텐츠 영역에 들어가는 표 형식*/
+#small_table_01 {border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-top:10px;margin-bottom:10px;}
+#small_table_01 td {font-size:12px;line-height:21px; padding: 5px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:31px; }
+#small_table_01 th {font-size:12px;font-weight:normal;line-height:21px; padding: 5px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:31px; }
+#small_table_01 .small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+#small_table_01 .small_bg_gray{background:#f6f6f6;text-align:center;}
+#small_table_01 .small_in_txt{padding-left:13px}
+/*컨텐츠 끝*/
+
+
+/*컨텐츠 영역에 들어가는 표 형식*/
+#small_table_01_n {border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-top:10px;margin-bottom:10px;}
+#small_table_01_n td {font-size:12px;line-height:14px; padding: 5px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; line-height:19px;}
+#small_table_01_n th {font-size:12px;font-weight:normal;line-height:14px; padding-top: 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd;}
+#small_table_01_n .small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+#small_table_01_n .small_bg_gray{background:#f6f6f6;text-align:center;}
+#small_table_01_n .small_in_txt{padding-left:13px}
+/*컨텐츠 끝*/
+
+/*컨텐츠 영역에 들어가는 표 형식 02*/
+#small_table_02 {border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-bottom:10px}
+#small_table_02 td {font-size:11px;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:31px; }
+#small_table_02 th {font-size:11px;font-weight:normal;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:31px; }
+#small_table_02 .small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+#small_table_02 .small_bg_gray{background-color:#f6f6f6;font-size: 11px; color: #4e4e4e;font-family:tahoma;text-align:center;}
+#small_table_02 .small_in_txt{padding-left:13px}
+
+.small_table_02 {border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-bottom:10px}
+.small_table_02 td {font-size:11px;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:31px; }
+.small_table_02 th {font-size:11px;font-weight:normal;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:31px; }
+.small_table_02 .small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+.small_table_02 .small_bg_gray{background:#f6f6f6;text-align:center;}
+.small_table_02 .small_in_txt{padding-left:13px}
+/*컨텐츠 끝*/
+
+/*컨텐츠 영역에 들어가는 표 형식 03*/
+#small_table_03 {border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-bottom:10px}
+#small_table_03 td {font-size:12px;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:27px; }
+#small_table_03 th {font-size:12px;font-weight:normal;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:27px; }
+#small_table_03 .small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+#small_table_03 .small_bg_gray{background:#f6f6f6;text-align:center;}
+#small_table_03 .small_num{text-align:right;}
+#small_table_03 .small_in_txt{padding-left:13px}
+
+.small_table_03 {border-top:1px solid #dddddd;border-left:1px solid #dddddd;margin-bottom:10px}
+.small_table_03 td {font-size:12px;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:27px; }
+.small_table_03 th {font-size:12px;font-weight:normal;line-height:21px; padding: 0px 5px; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:27px; }
+.small_table_03 .small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+.small_table_03 .small_bg_gray{background:#f6f6f6;text-align:center;}
+.small_table_03 .small_num{text-align:right;}
+.small_table_03 .small_in_txt{padding-left:13px}
+/*컨텐츠 끝*/
+
+/*컨텐츠 영역에 들어가는 폼 형식*/
+#form_group {border:1px solid #cccccc;margin-bottom:20px;}
+.form_cont{padding:5px 5px;text-align:left;}
+
+.form_cont01{border-bottom:1px solid #DDDDDD;height:31px;margin-left:15px;padding-top:5px;}
+.form_cont02{border-top:1px solid #FFFFFF;border-bottom:1px solid #DDDDDD;line-height:27px;height:27px;padding-top:5px;margin-left:15px;}
+.form_cont03{border-top:1px solid #FFFFFF;line-height:27px;height:27px;padding-top:5px;margin-left:15px;}
+.form_cont04{line-height:27px;height:27px;padding-top:5px;}
+
+.form_cont_txt{float:left;}
+input.txt_fild{border:1px solid #CCCCCC;padding:4px 5px 0 5px;}
+
+input.txt_fild_no{border:1px solid #CCCCCC;padding:4px 5px 0 5px;text-align:right;width:100px;}
+/*컨텐츠 끝*/
+
+/*컨텐츠 영역에 들어가는 리스트/보기/쓰기 형식*/
+.list_tit_bar{background:url(../images/cal/bg_listtit.gif) repeat-x;font:normal 11px dotum, tahoma;font-weight: bold;text-align:center;height:30px;padding-top:1px;}
+.list_cont {font:normal 11px tahoma;text-align:center;padding:7px 0;border-bottom:1px solid #EAEAEA;}
+
+#table_view{border-top:1px solid #EAEAEA;}
+/* 수정 09 / 17 */
+.view_tit {width:150px;background-color:#F6F6F6;border-top:1px solid #FFFFFF;border-bottom:1px solid #EAEAEA;font-weight: bold;padding:9px 0 6px 0;}
+.view_txt {border-bottom:1px solid #EAEAEA;padding:10px 0 6px 10px;}
+
+#table_write{border-top:1px solid #EAEAEA;margin:20px 0;}
+#table_write_1{border-top:1px solid #EAEAEA;margin:0px 0;}
+.write_tit {background-color:#F6F6F6;border-top:1px solid #FFFFFF;border-bottom:1px solid #EAEAEA;font-weight: bold;text-align:right;padding:8px 10px 6px 0;}
+.write_tit_left {background-color:#F6F6F6;border-top:1px solid #FFFFFF;border-bottom:1px solid #EAEAEA;font-weight: bold;text-align:left; padding-left:10px;}
+.write_form {border-bottom:1px solid #EAEAEA;padding:4px 0 4px 5px;}
+.write_btnbg{background:url(../images/cal/bg_btn.gif) no-repeat;}
+.write_btn{padding:0px;}
+/*컨텐츠 끝*/
+
+/*컨텐츠 영역의 텍스트 정렬 1depth*/
+.cont_dot_01 { background:url(../images/cal/bullet_orange_01.gif) no-repeat left 14px; padding:6px 0 0 20px; font-weight: bold;}
+
+.cont_dot_01_01 { background:url(../images/cal/bullet_cont_title_01.gif) no-repeat left 14px; padding:6px 0 0 11px; font-weight: bold;}
+.cont_in_txt_01{ background:url(../images/cal/bullet_blue_01.gif) no-repeat 8px 8px;padding-left:16px;}
+
+/*컨텐츠 영역의 텍스트 정렬 2depth*/
+.cont_dot_02 { background:url(../images/cal/bullet_orange_01.gif) no-repeat 16px 14px; padding:6px 0 0 23px;}
+.cont_in_txt_02{ background:url(../images/cal/bullet_blue_01.gif) no-repeat 24px 8px; padding-left:32px;}
+
+.cont_in_txt { background:url(../images/cal/bullet_gray_01.gif) no-repeat 12px 9px; padding-left:18px;font-size:11px;}
+/*컨텐츠 끝*/
+
+.cont_small_01 { font:normal 11px dotum, tahoma; letter-spacing:-1px; text-align:right; }
+
+.padding_bottom_01 { padding-bottom:15px; }
+.padding_bottom_02 { padding-bottom:5px; }
+.margin_bottom_01 { margin-bottom:15px; }
+
+.cont_sp { height:15px; }
+
+.top { background:url(../images/cal/bg_cont_top_01.gif) repeat-x left bottom; }
+.li_top { height:3px;font-size:0;margin:6px 0 4px; }
+
+.bt_line{border-top:1px solid #dddddd;padding:10px 0;}
+
+#btn_cont_01 { background:#404040 url(../images/cal/bg_btn_icon_01.gif) no-repeat 5px 5px; border:1px solid #cccccc; padding:0 10px 0 25px; height:30px; margin-top:10px; }
+#btn_cont_01 td a { font:bold 12px dotum, tahoma; color:#666666; }
+#btn_cont_01 td a:hover { color:#d6570f; text-decoration:none; }
+
+
+.btn_cont_01 { background:url(../images/info/bg_btn_icon_01.gif) repeat-x ; border:1px solid #cccccc;text-align:center; height:28px; margin-top:10px;padding:15px; }
+
+/**** 컨텐츠 설정 끝 ****/
+
+/*------------------------------------------------------------------------------------------*/
+
+/*강조폰트 설정*/
+.f_red{color:#d6570f;font-weight:bold;}
+.f_blue{color:#4d9ec8;}
+.f_bold{font-weight:bold;}
+.bt_img{vertical-align:middle; padding:0 5px 7px 5px;}
+
+
+/**** 연말정산 설정 끝 ****/
+
+/*연말정산 박스 */
+.box_01{padding-left:10px;padding-right:5px;width:94px;text-align:right;}
+
+/*컨텐츠 영역에 들어가는 표 형식 04*/
+#small_table_04 {border-left:1px solid #dddddd;border-top:1px solid #dddddd;margin-bottom:10px}
+#small_table_04 td {font-size:11px;line-height:20px; ; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:21px; }
+#small_table_04 .small_bg_tit{color:#538bac;background:#eff8f6;border-top:1px solid #ffffff;text-align:center;}
+#small_table_04 .small_bg_gray{background:#f6f6f6;text-align:center;}
+#small_table_04 .small_in_txt{padding-left:13px}
+#small_table_04 .small_in_txt_01{padding-left:15px}
+
+.small_table_04 {border-left:1px solid #dddddd;border-top:1px solid #dddddd;margin-bottom:10px}
+.small_table_04 td {font-size:11px;line-height:20px; ; border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:21px; }
+.small_table_04 .small_bg_tit{color:#538bac;background:#eff8f6;border-top:1px solid #ffffff;text-align:center;}
+.small_table_04 .small_bg_gray{background:#f6f6f6;text-align:center;}
+.small_table_04 .small_in_txt{padding-left:13px}
+.small_table_04 .small_in_txt_01{padding-left:15px}
+
+.small_table_05 {border-left:1px solid #888888;border-top:1px solid #888888;margin-bottom:10px}
+.small_table_05 td {font-size:11px;line-height:20px; ; border-bottom:1px solid #888888; border-right:1px solid #888888; height:21px; }
+.small_table_05 th {font-size:11px;line-height:20px; ; border-bottom:1px solid #888888; border-right:1px solid #888888; height:21px; text-align:center;}
+.small_table_05 .small_bg_tit{color:#538bac;background:#eff8f6;border-top:1px solid #ffffff;text-align:center;}
+.small_table_05 .small_bg_gray{background:#f6f6f6;text-align:center;}
+.small_table_05 .small_in_txt{padding-left:13px}
+.small_table_05 .small_in_txt_01{padding-left:15px}
+
+/*컨텐츠 끝*/
+
+/*표형식04 컨텐츠*/
+.cont_dot_03 { background:url(../images/cal/bullet_orange_01.gif) no-repeat 2px 7px; padding:0 0 0 7px;}
+.cont_in_txt_03{ background:url(../images/cal/bullet_blue_01.gif) no-repeat 8px 8px;padding-left:13px;}
+.cont_in_txt_pad_01{padding-left:23px;}
+
+/*표형식04 컨텐츠*/
+.cont_dot_04 { background:url(../images/cal/bullet_orange_01.gif) no-repeat 16px 14px; padding:6px 0 0 23px;}
+.cont_in_txt_04{ background:url(../images/cal/bullet_blue_01.gif) no-repeat 24px 8px; padding-left:32px;}
+
+/**** 연말정산 설정 끝 ****/
+
+.desc_td_03 { font:normal 12px 돋움,돋움체,tahoma; padding:1px 0 1px 1px; }
+
+
+.tit_arrimg {padding:0 8px 0 5px;}
+
+
+table caption{visibility:hidden; overflow:hidden; width:0; height:0; margin:0; padding:0; font-family: Arial;}
+
+
+/* form
+----------------------------------------------------------------------------*/
+form, fieldset, legend, label {margin:0; padding:0;}
+fieldset{border:0 none;}
+fieldset legend {position:absolute; visibility:hidden; overflow:hidden; width:0; height:0; margin:0; padding:0; font-family: Arial;}
+label input, label img, label select, label textarea,
+fieldset label, fieldset input, fieldset img, fieldset select, fieldset textarea{vertical-align:middle;}
+
+
+
+.small_bg_tit{background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+.small_bg_gray{background-color:#f6f6f6;font-size: 11px; color: #4e4e4e;font-family:tahoma;text-align:center;}
+.small_in_txt{padding-left:13px}
+
+
+
+
+
+.grp_tlt {background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+.grp_lft {background-color:#f6f6f6;font-size: 11px; color: #4e4e4e;font-family:tahoma;text-align:center;}

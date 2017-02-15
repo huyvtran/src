@@ -1,0 +1,48 @@
+jquery - 3.0.0
+jqgrid - 5.1.1
+lib.validate_1 - 1.15.0
+jquery.ui - 1.12.0		->lib.ui.js
+
+blockui
+
+
+jqtransform css,image(style 폴더) 바꾸기
+
+
+
+
+======================================================================
+
+master.biz.js - 706 line .live ->.on
+
+gw.com.module.js - msie = undefined -> script추가
+============================================로그인까지 가능===========
+메뉴 하나 선택해서 누르면 blockui - unblock 까지는 동작
+
+lib.ui.js - $.widget.bridge -> 
+		처리되지 않은 예외(줄: 310, 열: 3, 위치: http://localhost:58676/Lib/js/lib.jquery.js)
+		0x800a139e - JavaScript 런타임 오류: no such method 'add' for tabs widget instance
+
+		기존 jquery.ui 1.8.11v에는 해당부분 주석처리 되어있어서 똑같이 주석처리 하면 메뉴 눌렀을때 아무반응 없음
+			→주석해제
+		245 line if문(return $.error(no such method + options + for + name + widget instance)부분이 포인트
+			→options에 add가 들어갔을때 에서 발생
+			→jquery ui lib에 tabs.add method가 삭제됨(1.10.x~)
+			→add method ->refresh 로 변경
+			→처리되지 않은 예외(줄: 4691, 열: 3, 위치: http://localhost:58676/Lib/js/lib.jquery.js)
+			  0x800a138f - JavaScript 런타임 오류: 정의되지 않음 또는 null 참조인 'createDocumentFragment' 속성을 가져올 수 없습니다.
+			→태그명 수정(".ui-tabs-nav")
+			→tabs("select") 오류
+			→버전업되면서 active method로 변경됨-수정-lib.ui.js에 widget.bidge에 if(ismethodcall)은 true지만
+			  하위에 어느 if문에도 해당되지 않음
+		
+
+master.biz
+	-function buildtab
+		-tabTemplate option 삭제(1.9.0~) 
+		      - 대신  .tabs("widget").find(".ui-tabs-nav a").addClass("ui-icon ui-icon-close");구문 추가
+		-v_Tabs.obj 정의 수정(active,newPanel,refresh,var content)
+
+
+=======================================================================
+jqueryui - $widget.birdge - jquery - 어떻게 동작하는지

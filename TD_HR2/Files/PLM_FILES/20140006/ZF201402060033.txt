@@ -1,0 +1,497 @@
+1. \Forms\LedgerTrialBalanceListPage\Designs\Design\[Grid:ListPageGrid]\RealEdit:DebitAmount\Methods
+public void jumpRef()
+{
+    Args                    args;
+    FormRun                 formRun;
+
+    args = new Args();
+    args.parmObject(balanceParameters);										// balanceParameters 요게 뭐다냐
+    args.record(DimensionAttributeValueCombination);
+
+    formRun = new MenuFunction(menuitemDisplayStr(LedgerTransAccountDisplayDebitTrans), MenuItemType::Display).create(args);
+    formrun.run();
+}
+
+2. \Forms\LedgerTransAccount\Methods
+public void init()
+{
+    BudgetTmpControlStatistics budgetTmpControlStatistics;					// Tables : 예산관리통계
+    COSCostTrans cosCostTrans;												// Tables : 비용 트랜잭션
+    DimensionAttributeValue dimAttributeValue;								// Tables : 차원코드
+    DimensionAttributeValueCombination dimAttrValueCombo;					// Tables : 차원코드 조합
+    GeneralJournalAccountEntry generalJournalAccountEntryArg;				// Tables : 일반분개장계정 입력
+    MainAccount mainAccountArg;												// Tables : 주 계정
+    Query query;															// AX System Classes
+    QueryBuildDataSource ds;												// AX System Classes
+    QueryBuildRange range;													// AX System Classes
+    Struct dateRange;														// AX System Classes
+    LedgerAccount accountToDisplay;											// Extended Data Types : 원장계정(원장 전기용 계정번호)
+    TransDate endDate;														// Extended Data Types : 날짜(트랜잭션 일자)
+    TransDate startDate;													// Extended Data Types : 날짜(트랜잭션 일자)
+    Object caller;															// AX System Classes
+    tableId callingTable;
+    int dataSourceNumber;													// AX System Classes
+    LedgerTrialBalanceListPageBalanceParms balanceParameters;				// Classes
+
+    // <GCN>
+    TmpDailyLedger_CN       tmpDailyLedger_CN;								// Tables : Daily ledger
+    // </GCN>
+    //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH -->
+    DimensionHierarchy      mainAccountDimSet;								// Tables : 차원세트
+    MainAccount             mainAccountDetail;								// Tables : 주 계정
+    DimensionAttribute      dimensionAttribute;								// Tables : 차원
+    DimensionAttributeValue dimensionAttributeValue;						// Tables : 차원코드
+    DimensionAttributeValueTotallingCriteria dimAttrValueTotCrit;			// Tables : 시작 값
+    str                     mainAccountRange;								// AX System Classes
+    MainAccountListPageBalanceParameters lbalanceParameters;				// Classes
+    QueryRun                        queryRun;								// AX System Classes
+    MAV_TrialBalanceDetailsTmp      trialBalanceDetail;						// Tables : 
+    GeneralJournalEntry             generalJournalEntryT;					// Tables : 일반분개장 입력
+    FiscalCalendarPeriod            fiscalCalendarPeriodT;					// Tables : 회계달력기간
+    LedgerEntryJournal              ledgerEntryJournalT;					// Tables : 원장입력분개장
+    GeneralJournalAccountEntry      generalJournalAccountEntryT;			// Tables : 일반분개장계정 입력
+    TransDate                       fromDate,toDate;						// Extended Data Types : 날짜(트랜잭션 일자)
+    MainAccountNum                  mainAccountId;							// Extended Data Types : 주 계정(주 계정번호)
+    Amount                          balanceAmount;							// Extended Data Types : 금액(기본 통화)
+    Amount                          beginningBalance;						// Extended Data Types : 금액(기본 통화)
+    //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH <--
+
+    //MAV_GL_BSGLQ0185 MAVKH 20130425 -->
+    MAV_FITrialBalanceTmp                       fiTrialBalanceTmp;			// Tables : 합계잔액시산표(백산)
+    MainAccount                                 mainAccountRel;				// Tables : 주 계정
+    str                                         mainAccRange;				// AX System Classes
+    TransDate                                   yearStartDate;				// Extended Data Types : 날짜(트랜잭션 일자)
+    TransDate                                   periodStartDate;			// Extended Data Types : 날짜(트랜잭션 일자)
+    TransDate                                   periodEndDate;				// Extended Data Types : 날짜(트랜잭션 일자)
+    Object                                      callerForm;					// AX System Classes
+    //MAV_GL_BSGLQ0185 MAVKH 20130425 <--
+
+    caller = this.args().caller();
+    callingTable = this.args().dataset();
+
+    if (callingTable == tableNum(DimensionAttributeValueCombination))
+    {
+        for (dataSourceNumber = 1; dataSourceNumber <= element.form().dataSourceCount(); dataSourceNumber++)
+        {
+            if (element.form().dataSource(dataSourceNumber).table() == tableNum(LedgerTransAccountTmp))
+            {
+                element.form().dataSource(dataSourceNumber).linkType(FormLinkType::ExistJoin);
+                break;
+            }
+        }
+    }
+    // <GCN>
+    enableShowDRsCRs = LedgerShowDebCRedController_CN::isShowDRsCRsFeatureEnabled();	// 차변/대변, 차변금액/대변금액 표시여부 설정.. Balance details 탭에 적용 안되어 있음
+    if (enableShowDRsCRs)
+    {
+        showDRsCRsController = LedgerShowDebCRedController_CN::construct(tableNum(GeneralJournalAccountEntry));
+    }
+    // </GCN>
+
+    //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH -->
+    if (formHasMethod(caller, identifierStr(getBalanceParameters)))
+    {
+        lbalanceParameters = caller.getBalanceParameters();
+    }
+    //MAV_20140102_Fixing_KH MAVKH 20140102 -->
+    else if (this.args().parmObject() != null)
+    {
+        // passing the BalanceParams on args.parmObject() is supported because it has
+        // to be used for an invocation from X++ such as in a jumpRef override.
+        lbalanceParameters = this.args().parmObject() as LedgerTrialBalanceListPageBalanceParms;
+    }
+    //MAV_20140102_Fixing_KH MAVKH 20140102 <--
+
+    if (lbalanceParameters == null)
+    {
+        //Debug::assert(false);
+        lbalanceParameters = MainAccountListPageBalanceParameters::construct();
+    }
+    if(formHasMethod(caller, identifierStr(beginningBalance)))
+    {
+        beginningBalance = caller.beginningBalance();
+        balanceAmount = beginningBalance;
+        //LedgerEntryJournal_ds.linkType(FormLinkType::OuterJoin);
+    }
+    //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH <--
+
+    super();
+
+    //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH -->
+    BeginningBalanceEdit.realValue(balanceAmount);
+    //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH <--
+
+    // <GBR>
+    if (BrazilParameters::isEnabled())
+    {
+        Consolidation_BR.visible(CompanyInfo::isConsolidationCompany());
+        firstExecution_BR = true;
+    }
+    // </GBR>
+
+    // <GCN>
+    if (!enableShowDRsCRs)
+    {
+        this.hideNegativeDRCRController_CN();					// 차변/대변, 차변금액/대변금액 감춤.. Balance details 탭에 적용 안되어 있음
+    }
+    // </GCN>
+
+    if (!LedgerParameters::find().AcknowledgementDate_IT)
+    {
+        ledgerTrans_AcknowledgementDate.visible(false);			// 트랜잭션일자 감춤
+    }
+
+    ledgerDimensionAccountController = LedgerDimensionAccountController::construct(
+        generalJournalAccountEntry_ds,
+        fieldstr(GeneralJournalAccountEntry, LedgerDimension));
+
+    query = generalJournalAccountEntry_ds.query();
+    /* 이런 쿼리가 실행됨......
+    NAME:
+		query
+	VALUE:
+		Query  object 99d5c60: SELECT FIRSTFAST * FROM GeneralJournalAccountEntry(GeneralJournalAccountEntry) JOIN * FROM GeneralJournalEntry(GeneralJournalEntry) ON GeneralJournalAccountEntry.GeneralJournalEntry = GeneralJournalEntry.RecId OUTER JOIN * FROM LedgerEntryJournal(LedgerEntryJournal) ON GeneralJournalEntry.LedgerEntryJournal = LedgerEntryJournal.RecId JOIN * FROM FiscalCalendarPeriod(FiscalCalendarPeriod) ON GeneralJournalEntry.FiscalCalendarPeriod = FiscalCalendarPeriod.RecId JOIN * FROM DimensionAttributeValueCombination(DimensionAttributeValueCombination) ON GeneralJournalAccountEntry.LedgerDimension = DimensionAttributeValueCombination.RecId JOIN * FROM MainAccount(MainAccount) ON DimensionAttributeValueCombination.RecId = MainAccount.OffsetLedgerDimension EXISTS JOIN * FROM LedgerTransAccountTmp(LedgerTransAccountTmp) WHERE GeneralJournalAccountEntry.LedgerDimension = LedgerTransAccountTmp.LedgerDimension OUTER JOIN DisplayValue FROM DimensionAttributeValueCombination(Ref_DimensionAttributeValueCombination_LedgerDimension) ON GeneralJournalAccountEntry.LedgerDimension = DimensionAttributeValueCombination.RecId
+	TYPE:
+		Query
+	*/
+
+
+    // sort by accounting date because it is the preferred user sort
+    // additionally sort by journal and voucher to provide a consistent order within duplicate dates
+    ds = query.dataSourceTable(tableNum(GeneralJournalEntry));
+    ds.addSortField(fieldNum(GeneralJournalEntry, AccountingDate));
+    ds.addSortField(fieldNum(GeneralJournalEntry, JournalNumber));
+    ds.addSortField(fieldNum(GeneralJournalEntry, SubledgerVoucher));
+
+    // set the DimensionAttributeValueCombination-->MainAccount relation because the wrong one is the default
+    ds = query.dataSourceTable(tableNum(MainAccount));
+
+    ds.clearLinks();
+    ds.addLink(fieldNum(DimensionAttributeValueCombination, MainAccount), fieldNum(MainAccount, RecId));
+
+    range = ds.addRange(fieldNum(MainAccount, LedgerChartOfAccounts));
+    range.value(queryValue(LedgerChartOfAccounts::current()));
+
+    ds = query.dataSourceTable(tableNum(GeneralJournalEntry));
+    range = ds.addRange(fieldNum(GeneralJournalEntry, Ledger));
+    range.value(SysQuery::value(Ledger::current()));
+
+    switch (callingTable)
+    {
+        case tablenum(GeneralJournalAccountEntry):
+            generalJournalAccountEntryArg = element.args().record() as GeneralJournalAccountEntry;
+
+            mainAccountArg = DimensionStorage::getMainAccountFromLedgerDimension(generalJournalAccountEntryArg.LedgerDimension);
+            Debug::assert(mainAccountArg != null);
+
+            accountToDisplay = mainAccountArg.MainAccountId;
+
+            ds = query.dataSourceTable(tablenum(MainAccount));
+            range = SysQuery::findOrCreateRange(ds, fieldnum(MainAccount, RecId));
+            range.value(SysQuery::value(mainAccountArg.RecId));
+
+            if (element.args().parm() == "@SYS54253" + int642str(generalJournalAccountEntryArg.LedgerDimension))
+            {
+                // special case for adding a date range
+                dateRange = element.args().object();
+
+                startDate = dateRange.value('startDate');
+                endDate = dateRange.value('endDate');
+
+                ds = query.dataSourceTable(tablenum(GeneralJournalEntry));
+                range = SysQuery::findOrCreateRange(ds, fieldnum(GeneralJournalEntry, AccountingDate));
+                range.value(SysQuery::range(startDate, endDate));
+            }
+            break;
+
+        case tablenum(MainAccount):
+            mainAccountArg = element.args().record() as MainAccount;
+            Debug::assert(mainAccountArg != null);
+
+            accountToDisplay = mainAccountArg.MainAccountId;
+
+            ds = query.dataSourceTable(tablenum(MainAccount));
+            range = SysQuery::findOrCreateRange(ds, fieldnum(MainAccount, RecId));
+            range.value(SysQuery::value(mainAccountArg.RecId));
+            break;
+
+        // <GCN>
+        case(tablenum(TmpDailyLedger_CN)):
+            if (LedgerParameters::isLedgerInquiry_CN())
+            {
+                tmpDailyLedger_CN = element.args().record() as TmpDailyLedger_CN;
+
+                ds = query.dataSourceTable(tablenum(GeneralJournalEntry));
+                ds.addDynalink(
+                    fieldnum(TmpDailyLedger_CN, GeneralJournalAccountEntry),
+                    tmpDailyLedger_CN,
+                    fieldnum(GeneralJournalEntry, RecId));
+            }
+            break;
+        // </GCN>
+
+        case tablenum(DimensionAttributeValue):
+            dimAttributeValue = element.args().record() as DimensionAttributeValue;
+
+            ds = query.dataSourceTable(tablenum(DimensionAttributeValueCombination));
+
+            ds = ds.addDataSource(tablenum(DimensionAttributeValueGroupCombination));
+            ds.joinMode(JoinMode::ExistsJoin);
+            ds.fetchMode(QueryFetchMode::One2One);
+            ds.addLink(fieldnum(DimensionAttributeValueCombination, RecId), fieldnum(DimensionAttributeValueGroupCombination, DimensionAttributeValueCombination));
+
+            ds = ds.addDataSource(tablenum(DimensionAttributeValueGroup));
+            ds.joinMode(JoinMode::ExistsJoin);
+            ds.fetchMode(QueryFetchMode::One2One);
+            ds.addLink(fieldnum(DimensionAttributeValueGroupCombination, DimensionAttributeValueGroup), fieldnum(DimensionAttributeValueGroup, RecId));
+
+            ds = ds.addDataSource(tablenum(DimensionAttributeLevelValue));
+            ds.joinMode(JoinMode::ExistsJoin);
+            ds.fetchMode(QueryFetchMode::One2One);
+            ds.addLink(fieldnum(DimensionAttributeValueGroup, RecId), fieldnum(DimensionAttributeLevelValue, DimensionAttributeValueGroup));
+
+            // This restricts to only those matching the dimension value being passed in.
+            range = ds.addRange(fieldnum(DimensionAttributeLevelValue, DimensionAttributeValue));
+            range.value(queryValue(dimAttributeValue.RecId));
+
+            accountToDisplay = dimAttributeValue.getValue();
+            break;
+
+        case tablenum(DimensionAttributeValueCombination):
+            //APS_TrialBalance_JF added by jeff hao on 09132013 begin
+            /*if (this.args().parmEnumType() == enumNum(LedgerTransAccountDisplayType))
+            {
+                if (formHasMethod(caller, identifierStr(getBalanceParameters)))
+                {
+                    balanceParameters = caller.getBalanceParameters();
+                }
+                else if (this.args().parmObject() != null)
+                {
+                    // passing the BalanceParams on args.parmObject() is supported because it has
+                    // to be used for an invocation from X++ such as in a jumpRef override.
+                    balanceParameters = this.args().parmObject() as LedgerTrialBalanceListPageBalanceParms;
+                }
+
+                if (balanceParameters == null)
+                {
+                    throw error(Error::wrongUseOfFunction(funcName()));
+                }
+                balanceParameters.updateQueryForDisplayType(query, this.args().parmEnum());
+            }*/
+
+            dimAttrValueCombo = element.args().record() as DimensionAttributeValueCombination;
+
+            /*// This is a workaround to get the physical table created
+            select firstOnly RecId from LedgerTransAccountTmp;
+
+            // Populate the filtering temp table with dimension combinations that match the incoming value
+            LedgerTransAccountTmp::fillFromLedgerDimension(LedgerTransAccountTmp, dimAttrValueCombo.RecId);
+
+            // this has to be cleared because the record on the args is from a different hierarchy
+            ds = query.dataSourceTable(tablenum(GeneralJournalAccountEntry));
+            ds.clearDynalinks();
+
+            // Set up the explicit link with LedgerTransAccountTmp
+            ds = LedgerTransAccountTmp_ds.query().dataSourceTable(tableNum(LedgerTransAccountTmp));
+            ds.joinMode(JoinMode::ExistsJoin);
+            ds.fetchMode(QueryFetchMode::One2One);
+            ds.addLink(fieldNum(GeneralJournalAccountEntry, LedgerDimension), fieldNum(LedgerTransAccountTmp, LedgerDimension));
+
+            accountToDisplay = dimAttrValueCombo.DisplayValue;*/
+            //2012.06.07 MAV_TrialBalanceAndPostedTransactions OADKH -->
+            ds = query.dataSourceTable(tablenum(GeneralJournalEntry));
+            range = SysQuery::findOrCreateRange(ds, fieldnum(GeneralJournalEntry, AccountingDate));
+            //fromDate = FiscalCalendars::findOpeningStartDateByDate(CompanyInfo::fiscalCalendarRecId(), balanceParameters.getStartDate());
+            fromDate = lbalanceParameters.getStartDate();
+            toDate   = lbalanceParameters.getEndDate();
+            range.value(queryRange(fromDate,toDate));
+
+            mainAccountId = strReplace(dimAttrValueCombo.DisplayValue,'-','');
+            if(MainAccount::findByMainAccountId(mainAccountId).Type == DimensionLedgerAccountType::Total)
+            {
+                ds = query.dataSourceTable(tablenum(MainAccount));
+                range = SysQuery::findOrCreateRange(ds, fieldnum(MainAccount, RecId));
+
+                mainAccountDimSet = DimensionHierarchy::getMainAccountFocus();
+
+                dimensionAttribute = DimensionAttribute::find(DimensionAttribute::getMainAccountDimensionAttribute());
+
+                dimensionAttributeValue = DimensionAttributeValue::findByDimensionAttributeAndValue(dimensionAttribute, mainAccountId);
+
+
+                while select * from mainAccountDetail
+                        where mainAccountDetail.LedgerChartOfAccounts == LedgerChartOfAccounts::current()
+                            && mainAccountDetail.Type <= DimensionLedgerAccountType::Equity
+                    exists join dimAttrValueTotCrit
+                        where dimAttrValueTotCrit.DimensionAttributeValue == dimensionAttributeValue.RecId
+                            //&& dimAttrValueTotCrit.InvertTotalSign == #NotInverted
+                            && dimAttrValueTotCrit.FromValue <= mainAccountDetail.MainAccountId
+                            && dimAttrValueTotCrit.ToValue >= mainAccountDetail.MainAccountId
+                {
+                    mainAccountRange += strFmt("%1,",mainAccountDetail.RecId);
+                }
+                mainAccountRange = strDel(mainAccountRange,strLen(mainAccountRange),1);
+                //range.value(SysQuery::value(mainAccountRange));
+                range.value(mainAccountRange);
+
+                ds = query.dataSourceTable(tablenum(GeneralJournalAccountEntry));
+                ds.clearDynalinks();
+
+                accountToDisplay = dimAttrValueCombo.DisplayValue;
+            }
+            else
+            {
+                ds = query.dataSourceTable(tablenum(DimensionAttributeValueCombination));
+                //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH -->
+                ds.addRange(fieldNum(DimensionAttributeValueCombination, DisplayValue)).value(strFmt("%1*",dimAttrValueCombo.DisplayValue));
+                //2012.06.05 MAV_TrialBalanceAndPostedTransactions OADKH <--
+
+                // This is a workaround to get the physical table created
+                select firstOnly RecId from LedgerTransAccountTmp;
+
+                // Populate the filtering temp table with dimension combinations that match the incoming value
+                LedgerTransAccountTmp::fillFromLedgerDimension(LedgerTransAccountTmp, dimAttrValueCombo.RecId);
+
+                // this has to be cleared because the record on the args is from a different hierarchy
+                ds = query.dataSourceTable(tablenum(GeneralJournalAccountEntry));
+                ds.clearDynalinks();
+
+                // Set up the explicit link with LedgerTransAccountTmp
+
+                ds = LedgerTransAccountTmp_ds.query().dataSourceTable(tableNum(LedgerTransAccountTmp));
+
+                ds.joinMode(JoinMode::ExistsJoin);
+                ds.fetchMode(QueryFetchMode::One2One);
+                ds.addLink(fieldNum(GeneralJournalAccountEntry, LedgerDimension), fieldNum(LedgerTransAccountTmp, LedgerDimension));
+
+                ds.clearDynalinks();
+
+                accountToDisplay = dimAttrValueCombo.DisplayValue;
+            }
+
+            //2012.06.07 MAV_TrialBalanceAndPostedTransactions OADKH -->
+            LedgerTransAccountTmp_ds.query().dataSourceTable(tableNum(LedgerTransAccountTmp)).joinMode(JoinMode::OuterJoin);
+            //LedgerEntryJournal_ds.linkType(FormLinkType::OuterJoin);
+            //query.dataSourceTable(tableNum(LedgerEntryJournal)).joinMode(JoinMode::OuterJoin);
+            MAV_TrialBalanceDetailsTmp_DS.query().dataSourceTable(tableNum(MAV_TrialBalanceDetailsTmp)).clearDynalinks();
+            MAV_TrialBalanceDetailsTmp.setTmpData(trialBalanceDetail);
+
+            ds = query.dataSourceTable(tablenum(FiscalCalendarPeriod));
+            range = SysQuery::findOrCreateRange(ds, fieldnum(FiscalCalendarPeriod, Type));
+            range.value(enum2str(FiscalPeriodType::Operating));
+
+            query.dataSourceTable(tableNum(GeneralJournalEntry)).addSortField(fieldnum(GeneralJournalEntry, AccountingDate));
+            //query.dataSourceTable(tableNum(GeneralJournalAccountEntry)).addSortField(fieldnum(GeneralJournalAccountEntry, RecId));
+
+            queryRun = new QueryRun(LedgerTransAccountTmp_ds.query());
+            while(queryRun.next())
+            {
+                generalJournalEntryT = queryRun.get(tableNum(GeneralJournalEntry));
+                fiscalCalendarPeriodT = queryRun.get(tableNum(FiscalCalendarPeriod));
+                ledgerEntryJournalT    = queryRun.get(TableNum(LedgerEntryJournal));
+                generalJournalAccountEntryT = queryRun.get(TableNum(GeneralJournalAccountEntry));
+
+                trialBalanceDetail.clear();
+                trialBalanceDetail.TransDate       = generalJournalEntryT.AccountingDate;
+                trialBalanceDetail.Type            = fiscalCalendarPeriodT.Type;
+                trialBalanceDetail.JournalNum      = ledgerEntryJournalT.JournalNumber;
+                trialBalanceDetail.LedgerDimension = generalJournalAccountEntryT.LedgerDimension;
+                trialBalanceDetail.JournalCategory = generalJournalEntryT.JournalCategory;
+                trialBalanceDetail.PostingType     = generalJournalAccountEntryT.PostingType;
+                trialBalanceDetail.Text            = generalJournalAccountEntryT.Text;
+                trialBalanceDetail.IsCredit        = generalJournalAccountEntryT.IsCredit;
+                trialBalanceDetail.RefRecid        = generalJournalEntryT.RecId;
+                //20121115 charels.kim Add 두 필드 추가
+                trialBalanceDetail.TransactionCurrencyAmount = generalJournalAccountEntryT.TransactionCurrencyAmount;
+                trialBalanceDetail.TransactionCurrencyCode   = generalJournalAccountEntryT.TransactionCurrencyCode;
+                //20121115 charels.kim Add 두 필드 추가
+                if(generalJournalAccountEntryT.IsCredit == NoYes::No)
+                    trialBalanceDetail.ReportingCurrencyAmountDebit  = generalJournalAccountEntryT.ReportingCurrencyAmount;
+                else
+                    //MAV_20140109_Fixing_KH MAVKH 20140109 -->
+                    //trialBalanceDetail.ReportingCurrencyAmountCredit = generalJournalAccountEntryT.ReportingCurrencyAmount;
+                    trialBalanceDetail.ReportingCurrencyAmountCredit = -generalJournalAccountEntryT.ReportingCurrencyAmount;
+                    //MAV_20140109_Fixing_KH MAVKH 20140109 <--
+
+                balanceAmount += generalJournalAccountEntryT.ReportingCurrencyAmount;
+                trialBalanceDetail.ReportingCurrencyAmountBalance = balanceAmount;
+
+                trialBalanceDetail.GL_SEQ = generalJournalAccountEntryT.GL_SEQ;
+                trialBalanceDetail.GL_SEQNUM = generalJournalAccountEntryT.GL_SEQNUM;
+
+                trialBalanceDetail.doInsert();
+            }
+            query.dataSourceTable(tableNum(GeneralJournalEntry)).clearRange(fieldnum(GeneralJournalEntry, AccountingDate));
+            query.dataSourceTable(tableNum(GeneralJournalEntry)).clearRange(fieldnum(FiscalCalendarPeriod, Type));
+            query.dataSourceTable(tablenum(DimensionAttributeValueCombination)).clearRange(fieldNum(DimensionAttributeValueCombination, DisplayValue));
+            MAV_TrialBalanceDetailsTmp_DS.query().dataSourceTable(tableNum(MAV_TrialBalanceDetailsTmp)).addSortField(fieldnum(MAV_TrialBalanceDetailsTmp, RecId));
+            LedgerTransAccountTmp_ds.query().dataSourceTable(tableNum(LedgerTransAccountTmp)).joinMode(JoinMode::ExistsJoin);
+            //2012.06.07 MAV_TrialBalanceAndPostedTransactions OADKH <--
+
+            //APS_TrialBalance_JF end
+            break;
+
+        case tablenum(COSCostTrans):
+            query.dataSourceTable(tablenum(GeneralJournalAccountEntry)).clearDynalinks();
+
+            cosCostTrans = element.args().record() as COSCostTrans;
+
+            mainAccountArg = COSLedgerReference::findMainAccountByCostCategory(cosCostTrans.AccountNumber);
+            Debug::assert(mainAccountArg != null);
+
+            accountToDisplay = mainAccountArg.MainAccountId;
+
+            ds = query.dataSourceTable(tablenum(MainAccount));
+            range = SysQuery::findOrCreateRange(ds, fieldnum(MainAccount, RecId));
+            range.value(SysQuery::value(mainAccountArg.RecId));
+            break;
+
+        case tablenum(BudgetTmpControlStatistics):
+            budgetTmpControlStatistics = element.args().record() as BudgetTmpControlStatistics;
+
+            if (budgetTmpControlStatistics != null)
+            {
+                // Add the range on transaction date based on the <c>BudgetTmpControlStatistics</c> record.
+                ds = query.dataSourceTable(tablenum(GeneralJournalEntry));
+                range = ds.addRange(fieldnum(GeneralJournalEntry, AccountingDate));
+                range.value(SysQuery::range(budgetTmpControlStatistics.PeriodStartDate, budgetTmpControlStatistics.PeriodEndDate));
+            }
+            break;
+
+        //MAV_GL_BSGLQ0185 MAVKH 20130425 -->
+        case tablenum(MAV_FITrialBalanceTmp):
+            fiTrialBalanceTmp = element.args().record() as MAV_FITrialBalanceTmp;
+            accountToDisplay = fiTrialBalanceTmp.AccountNum;
+            mainAccountRel = MainAccount::findByMainAccountId(fiTrialBalanceTmp.AccountNum);
+            ds = query.dataSourceTable(tablenum(MainAccount));
+            range = SysQuery::findOrCreateRange(ds, fieldnum(MainAccount, MainAccountId));
+
+            if(mainAccountRel.Type == DimensionLedgerAccountType::Total)
+            {
+                mainAccountDimSet = DimensionHierarchy::getMainAccountFocus();
+                dimensionAttribute = DimensionAttribute::find(DimensionAttribute::getMainAccountDimensionAttribute());
+                dimensionAttributeValue = DimensionAttributeValue::findByDimensionAttributeAndValue(dimensionAttribute, fiTrialBalanceTmp.AccountNum);
+                select firstOnly dimAttrValueTotCrit
+                           where dimAttrValueTotCrit.DimensionAttributeValue == dimensionAttributeValue.RecId;
+
+                range.value(queryRange(dimAttrValueTotCrit.FromValue, dimAttrValueTotCrit.ToValue));
+            }
+            else
+            {
+                range.value(queryValue(fiTrialBalanceTmp.AccountNum));
+            }
+
+            callerForm = element.args().caller();
+            if(formHasMethod(callerForm, 'getDateRange'))
+            {
+                [yearStartDate, periodStartDate, periodEndDate] = callerForm.getDateRange();
+                ds = query.dataSourceTable(tablenum(GeneralJournalEntry));
+                range = ds.addRange(fieldnum(GeneralJournalEntry, AccountingDate));
+                range.value(SysQuery::range(yearStartDate, periodEndDate));
+            }
+            break;
+        //MAV_GL_BSGLQ0185 MAVKH 20130425 <--
+    }
+
+    element.design().caption(strfmt("@SYS24991", accountToDisplay));
+}

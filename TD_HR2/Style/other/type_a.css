@@ -1,0 +1,397 @@
+/*Borad_type A*/
+
+/*Default*/
+table {font-size: 12px; color: #505050; font-family:gulim,tahoma;}
+td {font-size: 12px; color: #505050; font-family:gulim,tahoma;}
+select {font-size: 12px; color: #505050; font-family:gulim,tahoma;line-height: normal;}
+textarea {font-size: 12px; color: #505050; font-family:gulim,tahoma;line-height: normal;}
+input {font-size: 11px; color: #505050; font-family:gulim,tahoma;}
+input.box {font-size: 11px; color: #505050; font-family:gulim,tahoma;border:1px solid #acacac;line-height:18px;}
+img {border: 0; margin:0;}
+
+
+
+
+
+/*DIV Á¤·ÄÄÚµå*/
+div.float_left{float:left;}
+div.float_right{float:right;}
+
+/*a°Ë»ö*/
+
+.search01_left{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_search01_left.gif) no-repeat;width:4px;}
+.search01_middle{padding:5px;border: 1px solid #cccccc;text-align:left;vertical-align:middle;}
+.search01_right{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_search01_right.gif) no-repeat;width:4px;}
+
+.search_bar{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_search_bar.gif) no-repeat;width:8px;}
+
+table.search_01{height:44px}
+table.search_02{height:64px;}
+
+.search_02 .searchimg{padding-left:10px;padding-right:5px;width:94px;}
+.searchimg{padding-left:10px;padding-right:5px;}
+.searchline{padding-left:5px;text-align:center;width:20px;}
+
+.search_form_03{padding-left:5px;}
+
+select.sc_01{font-size: 12px; color: #505050; font-family:gulim,tahoma;width:70px;}
+select.sc_02{font-size: 12px; color: #505050; font-family:gulim,tahoma;width:50px;}
+select.sc_03{font-size: 12px; color: #505050; font-family:gulim,tahoma;width:90px;}
+input.search_sbj{font-size: 12px; color: #505050; font-family:gulim,tahoma;font-weight: bold; width:120px;background-color:#d3d3d3;border-top:1px solid #939393;border-right:1px solid #D3D3D3;border-bottom:1px solid #D3D3D3;border-left:1px solid #939393;padding:4px 5px 0 5px;}
+.search_txt{padding-left:5px;}
+.search_re_txt{font-size:11px;width:80px;float:left;padding-top:2px;}
+
+.h20{height:20px;}
+
+
+/*b°Ë»ö*/
+
+.search02_left{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_b/img_search02_left.gif) no-repeat;width:4px;}
+.search02_middle{padding:4px;border: 1px solid #cccccc;text-align:left;vertical-align:middle;}
+.search02_right{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_b/img_search02_right.gif) no-repeat;width:4px;}
+
+table.search_02{height:64px;}
+
+.search_form_01{border-bottom:1px solid #DADADA;padding-left:5px;text-align:left;width:600px;font-weight:bold;}
+.search_form_02{border-top:1px solid #FFFFFF;padding-left:5px;text-align:left;font-weight:bold;}
+
+
+/*e°Ë»ö*/
+
+
+/*.search_form_03{padding:3px 0 0 5px; width:32px;}*/
+select.sc_01{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;width:90px;}
+select.sc_02{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;width:50px;}
+input.search_sbj{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;font-weight: bold; width:110px;background-color:#d3d3d3;border-top:1px solid #939393;border-right:1px solid #D3D3D3;border-bottom:1px solid #D3D3D3;border-left:1px solid #939393;padding:4px 5px 0 5px;}
+.search_txt{padding-left:5px;}
+
+.search_ra{width:10px;}
+.search_ra_txt{font-size:12px;font-weight:bold;padding-top:3px;width:28px;}
+
+.h20{height:20px;}
+
+/*±¹¼¼Ã»¹ß°£Ã¥ÀÚ°ü·Ã*/
+.tab2 {background:url('http://www.nts.go.kr/images/common/img_quicksc_txt.gif') left repeat; width:293px; height:31px; font-size: 11px;color: #505050;text-align:center;vertical-align:bottom;}
+.quick_sc{border:1px solid #cccccc;padding:5px;margin-bottom:10px;}
+
+/*ÆäÀÌÁö¼ö*/
+.pagenum{font-size: 11px; color: #505050; font-family:gulim,tahoma;padding-bottom:2px;}
+
+
+/*¸®½ºÆ®*/
+#wrap {width:708px; }
+#table_list {width:100%;}
+.table_list {width:100%;}
+
+#wrap .table_list{ width:100%;}
+
+/*¸®½ºÆ® title*/
+.table_list2_add {width:100%;background:url(http://www.nts.go.kr/images/cal/list_bar_add_bg.gif) left top repeat-x;height:30px;}
+.table_list2_add tr{ background:none;}
+
+.table_list2 {width:100%;background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/list_bar.gif) left top repeat-x;height:30px;}
+.table_list2 tr{ background:none;}
+.list_tit_bar_01{
+font-size: 11px; color: #505050; font-family:gulim;font-weight: bold;text-align:center;height:30px;padding-top:1px;
+}
+.list_tit_bar_02 {font-size: 11px; color: #505050; font-family:gulim;font-weight: bold;text-align:center; height:30px;padding-top:1px;}
+
+/*¸®½ºÆ® content*/
+.list_no {font-size: 11px; color: #AAAAAA; font-family:tahoma;text-align:center;padding:7px 0;border-bottom:1px solid #EAEAEA;}
+.list_subject {font-size: 12px; color: #505050; font-family:gulim;padding:7px 10px;line-height:16px;border-bottom:1px solid #EAEAEA;}
+
+a.list_subject:link,a.list_subject:active,a.list_subject:visited
+{font-size: 12px; color: #505050; font-family:gulim;text-decoration:none;
+padding:7px 10px 7px 10px;line-height:16px;}
+
+a.list_top:link,a.list_top:active,a.list_top:visited
+{font-size: 12px; color:#2E92A7; font-family:gulim;text-decoration:none;
+padding:7px 10px 7px 0;line-height:16px;}
+
+
+.list_date {font-size: 11px; color: #AAAAAA; font-family:tahoma;text-align:center;padding:7px 0;border-bottom:1px solid #EAEAEA;}
+.list_part {font-size: 11px; color: #AAAAAA; font-family:gulim;text-align:center;padding:7px 0;line-height:14px;border-bottom:1px solid #EAEAEA;}
+.list_file {text-align:center;padding:5px 0;border-bottom:1px solid #EAEAEA;}
+.fileimg {vertical-align:middle;margin:1px;}
+.list_hit {font-size: 11px; color: #AAAAAA; font-family:tahoma;text-align:center;border-bottom:1px solid #EAEAEA;}
+.list_branch {font-size: 11px; color: #AAAAAA; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;line-height:14px;padding:7px 0;border-bottom:1px solid #EAEAEA;}
+.list_f_no {font-size: 11px; color: #AAAAAA; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;padding:7px 0;line-height:14px;border-bottom:1px solid #EAEAEA;}
+.list_test {font-size: 11px; color: #AAAAAA; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;padding:7px 0;line-height:14px;border-bottom:1px solid #EAEAEA;}
+
+
+.list_step_01 {font-size: 11px; color: #6A9100; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;font-weight: bold;border-bottom:1px solid #EAEAEA;}
+.list_step_02 {font-size: 11px; color: #2E92A7; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;font-weight: bold;border-bottom:1px solid #EAEAEA;}
+.list_step_03 {font-size: 11px; color: #CF6B00; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;font-weight: bold;border-bottom:1px solid #EAEAEA;}
+
+
+
+.list_no_csr {font-size: 11px; color: #000000; font-family:tahoma;text-align:center;padding:7px 0;border-bottom:1px solid #A9A9A9;}
+.list_hit_csr {font-size: 11px; color: #000000; font-family:tahoma;text-align:center;border-bottom:1px solid #A9A9A9;}
+.list_date_csr {font-size: 11px; color: #000000; font-family:tahoma;text-align:center;padding:7px 0;border-bottom:1px solid #A9A9A9;}
+.list_subject_csr {font-size: 12px; color: #000000; font-family:gulim;padding:7px 10px;line-height:16px;border-bottom:1px solid #A9A9A9;}
+.list_ver {font-size: 11px; color: #AAAAAA; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;padding:7px 0;line-height:14px;border-bottom:1px solid #EAEAEA;}
+
+/*f¸®½ºÆ®*/
+.list_photo {background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_f/bg_photo.gif) no-repeat; text-align:center;border-bottom:1px solid #EAEAEA; height:103px;}
+.list_photo_csr {background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_f/bg_photo_csr.gif) no-repeat; text-align:center;border-bottom:0px solid #EAEAEA; width:70px; height:71px;}
+
+
+/*ÆäÀÌÂ¡*/
+table.page {width:100%;margin:15px 0 20px 0;}
+
+.page {font-size: 11px; color: #000000; font-family:tahoma;text-align:center;padding:0 5px;}
+a.page:link,a.page:active,a.page:visited {font-size: 11px; color: #000000; font-family:tahoma;text-align:center;padding:0 5px;text-decoration:none;}
+.pageimg {padding-left:2px;padding-right:3px;}
+.pagenow {font-family:verdana;font-size: 11px;font-weight: bold; color:#c13b00;padding:0 5px;}
+
+.pagemove {font-size: 11px; color: #505050; font-family:gulim,tahoma;padding-right:7px;}
+.pagemoveimg {padding:0 5px;}
+
+
+
+
+
+/*o³»¿ëº¸±â*/
+.view_tit2 {background-color:#F6F6F6;width:110px;border-left:1px solid #cccccc;border-top:1px solid #cccccc;font-weight: bold;padding:9px 0 6px 0;text-align:center;border-right:1px solid #cccccc;}
+.view_txt2 {border-top:1px solid #cccccc;padding:10px 0 6px 10px;}
+.view_txt3 {border-top:1px solid #cccccc;padding:10px 0 6px 10px;border-right:1px solid #cccccc;}
+
+
+/*³»¿ëº¸±â*/
+.view_no_tit {background-color:#F6F6F6; border-bottom:1px solid #EAEAEA; font-weight:bold; padding:9px 10px 6px 10px;}
+.view_no_txt {background-color:#F6F6F6; line-height:20px; padding:10px;}
+.view_no_sign {background-color:#F6F6F6; border-bottom:1px solid #EAEAEA; font-weight:bold;padding:9px 10px 6px 10px; text-align:right;}
+.view_tit {background-color:#F6F6F6;width:110px;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;border-left:1px solid #cccccc;font-weight: bold;padding:9px 0 6px 0;text-align:center;border-right:1px solid #cccccc;}
+.tit_arrimg {padding:0 8px 0 5px;}
+.view_txt {border-bottom:1px solid #cccccc;padding:10px 0 6px 10px;}
+.view_subject {color:#0063a4;font-weight: bold;border-bottom:1px solid #cccccc;border-top:1px solid #cccccc;padding:10px 0 6px 10px;}
+.view_content {line-height:20px;border-bottom:1px solid #EAEAEA;padding:17px 10px 14px 10px; font-size: 12px;}
+.view_date {font-size: 11px; color: #AAAAAA;font-family:tahoma;width:80px;text-align:center;border-bottom:1px solid #cccccc;border-top:1px solid #cccccc;border-right:1px solid #cccccc;padding-right:10px;}
+
+.pd_t10{padding-top:10px;}
+.h10{height:10px;}
+.ea_line{height:1px;background-color:#EAEAEA;}
+
+.view_dl_top{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_download_top.gif) no-repeat;height:4px;}
+.view_dl_middle{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_download_middle.gif) repeat-y;padding-left:4px;}
+.view_dl_bottom{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_download_bottom.gif) no-repeat;height:5px;}
+.dl_tit{vertical-align:middle;padding-left:6px}
+.dl_txt{padding:6px 0 2px 10px;}
+.dl_img{vertical-align:middle;padding:0 4px;}
+
+.view_no_tit {background-color:#F6F6F6; border-bottom:1px solid #cccccc; font-weight:bold; padding:9px 10px 6px 10px;border-right:1px solid #cccccc;border-left:1px solid #cccccc;}
+.view_no_txt {background-color:#F6F6F6; line-height:20px; padding:10px;border-right:1px solid #cccccc;border-left:1px solid #cccccc;}
+.view_no_sign {background-color:#F6F6F6; border-bottom:1px solid #cccccc; font-weight:bold;padding:9px 10px 6px 10px; text-align:right;border-right:1px solid #cccccc;border-left:1px solid #cccccc;}
+
+
+.view_pg_top{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_download_top.gif) no-repeat;height:4px;}
+.view_pg_middle{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_download_middle.gif) repeat-y;padding:0 10px;}
+.view_pg_bottom{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/img_download_bottom.gif) no-repeat;height:5px;}
+
+.pg_tit{font-size: 11px;font-weight: bold;padding-top:4px;}
+.pg_txt{padding:5px 0 2px 10px;}
+.pg_img{vertical-align:middle;padding:0 8px 0 5px;}
+
+/*f³»¿ëº¸±â*/
+.view_photo {text-align:center;}
+img.photo {margin-top:10px;border:1px solid #AAAAAA;}
+
+/*g³»¿ëº¸±â*/
+
+#movie{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie.gif) no-repeat;height:434px;padding-top:55px;padding-left:24px;}
+#movie_1{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_1.gif) no-repeat;height:434px;padding-top:55px;padding-left:20px;}
+#movie_3{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_2.gif) no-repeat;height:300px;padding-top:30px;padding-left:40px;}
+#movie_2{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_3.gif) no-repeat;height:300px;padding-top:30px;padding-left:0px;}
+#movie_csr{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/movie_news_bg.gif) no-repeat;height:454px;padding:0;}
+
+.movie_playtit{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_playtit.gif) no-repeat;width:325px;height:26px;padding:1px 0 0 27px;}
+/*.movie_playtit_csr{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_playtit.gif) width:325px;height:42px;padding:1px 0 0 23px; padding-top:9px;}*/
+.movie_playtit_csr{height:42px;padding:1px 0 0 25px; padding-top:9px;}
+/* .movie_search{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_search.gif) no-repeat;height:29px;width:314px;margin:4px 0 0 0;} */
+.movie_search{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_search.gif) no-repeat;height:29px;width:314px;margin:4px 0px 0 20px;}
+.movie_search_csr{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_search.gif) no-repeat;height:29px;width:290px;margin:4px 0 0 0;}
+td.movielist{padding:0 11px;height:272px;vertical-align:top;}
+.movie_list{border-bottom:1px solid #595F62;padding:7px 0 4px 1px;}
+.movie_list_csr{border-bottom:0px solid #595F62;padding:7px 0 4px 1px;}
+.movie_txt{font-size: 12px; color: #FFFFFF; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;}
+.movie_icon{padding-right:5px;vertical-align:middle;}
+a.movie_txt:link,a.movie_txt:active,a.movie_txt:visited
+{font-size: 12px; color: #FFFFFF; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;text-decoration:none;}
+
+.bg_movie_sc01{padding-left:54px;}
+
+input.movie_sc{font-size: 11px; color: #000000; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;width:142px;background-color:#9da2aa;
+							border-top:1px solid #23262a;border-right:1px solid #c4c4c4;border-bottom:1px solid #c4c4c4;border-left:1px solid #23262a;
+							padding:4px 5px 0 5px;}
+.movie_scimg{padding-left:5px;padding-right:4px;}
+
+.h12{height:12px;}
+.h20{height:20px;}
+
+
+/*±Û¾²±â*/
+.write_tit {background-color:#F6F6F6;border-top:1px solid #FFFFFF;border-bottom:1px solid #EAEAEA;font-weight: bold;text-align:right;padding:8px 10px 6px 0;}
+.write_tit_left {background-color:#F6F6F6;border-top:1px solid #FFFFFF;border-bottom:1px solid #EAEAEA;font-weight: bold;text-align:left;padding:8px 10px 6px 0;}
+.write_form {border-bottom:1px solid #EAEAEA;padding:4px 0 4px 5px;}
+
+
+input.box_subject{font-size: 12px; color: #505050; font-family:gulim,tahoma;border:1px solid #acacac;width:480px;}
+input.box_write{font-size: 12px; color: #505050; font-family:gulim,tahoma;border:1px solid #acacac;width:100px;}
+input.box_sitelink{font-size: 12px; color: #505050; font-family:gulim,tahoma;border:1px solid #acacac;width:480px;}
+
+
+
+
+.txt_small_01{font-size: 11px;font-weight: bold;padding-top:4px;}
+.txt_small_02{color:#1a85b6;font-size: 11px;font-weight: bold;padding-top:4px;}
+.txt_point {color:#bd3e00;}
+
+.write_content{padding:10px 0;border-bottom:1px solid #EAEAEA;}
+textarea.content_write {font-size: 12px; color: #505050; font-family:gulim,tahoma;line-height:20px;
+										border:1px solid #acacac;width:97%;height:236px;padding:10px;}
+textarea.content_write1 {font-size: 12px; color: #505050; font-family:gulim,tahoma;line-height:20px;
+										border:1px solid #acacac;width:97%;height:180px;padding:10px;}
+
+input.box_file{font-size: 12px; color: #505050; font-family:gulim,tahoma;border:1px solid #acacac;width:320px;}
+.file_img{vertical-align:middle;padding-right:5px;}
+
+
+.write_file_tit {font-size: 11px;color: #505050;font-family:gulim,tahoma;font-weight: bold;font-weight: bold;text-align:right;padding:9px 10px 6px 0;}
+.write_file_form {padding:4px 5px 4px 5px;}
+.write_file_point{font-size: 11px;color: #505050;font-family:gulim,tahoma;padding:10px 0 8px 5px;}
+.file_img_02{padding:3px 0;}
+
+.h14{height:14px;}
+
+.write_btnbg{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_a/bg_btn.gif) no-repeat;height:30px;}
+.btn_img{padding:3px 5px 3px 5px;}
+.btn_width{width:85px;}
+
+
+
+/*ºü¸¥°Ë»ö*/
+
+.tapline{border-bottom:5px solid #0b99e2;width:535px;}
+.taptxt{padding-bottom:15px;}
+.download{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_h/bg_download.gif) no-repeat;padding:66px 0 17px 515px;}
+.quick_sc{border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding:0 10px;}
+.qick_sc_txttd{border-bottom:1px solid #eaeaea;height:26px;padding:0 2px;}
+.qick_sc_txt{font-size: 15px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;padding-right:0px;}
+a.qick_sc_txt:link,a.qick_sc_txt:active,a.qick_sc_txt:visited {font-size: 11px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;padding-right:0px;}
+
+.icon_sq{vertical-align:middle;padding:0 2px;}
+
+/*¼­½Äº° ºü¸¥°Ë»ö*/
+
+.download1{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_h/bg_download.gif) no-repeat;padding:66px 0 17px 1px;}
+
+/*.quick_sc{border-left:5px solid #74BCC6;border-bottom:5px solid #74BCC6;border-right:5px solid #74BCC6;padding:0 10px;}
+.qick_sc_han{vertical-align:middle;padding:0 6px;width:12px;border-bottom:1px solid #eaeaea;height:26px;}
+.qick_sc_arr{vertical-align:middle;border-bottom:1px solid #eaeaea;height:26px;width:10px;}
+.qick_sc_txttd{border-bottom:1px solid #eaeaea;height:26px;}
+.qick_sc_txt{font-size: 11px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;padding-right:12px;}
+a.qick_sc_txt:link,a.qick_sc_txt:active,a.qick_sc_txt:visited {font-size: 11px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;padding-right:12px;}
+
+.icon_sq{vertical-align:middle;padding:0 2px;}
+.h10{height:10px;}*/
+
+
+.list_test {font-size: 11px; color: #AAAAAA; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;padding:7px 0;line-height:14px;border-bottom:1px solid #EAEAEA;}
+.search_02 .searchimg{padding-left:0px;padding-right:0px;width:50px;}
+.list_step_01 {font-size: 11px; color: #6A9100; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;font-weight: bold;border-bottom:1px solid #EAEAEA;}
+.list_step_02 {font-size: 11px; color: #2E92A7; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;font-weight: bold;border-bottom:1px solid #EAEAEA;}
+.list_step_03 {font-size: 11px; color: #CF6B00; font-family:µ¸¿ò,µ¸¿òÃ¼;text-align:center;font-weight: bold;border-bottom:1px solid #EAEAEA;}
+
+
+/*DIV ³ôÀÌ ÀÚµ¿Á¶Àý:height ¼³Á¤À» »èÁ¦*/
+#first_list { font-size:11px; padding:5px 5px 10px 10px;line-height:23px;height:130px;}
+#second_list { font-size:11px; padding:5px 5px 10px 10px;line-height:23px;height:130px;}
+#third_list { font-size:11px; padding:5px 5px 10px 10px;line-height:23px;height:130px;}
+
+/*¸®½ºÆ®º¸±â*/
+.view_top {border-top:1px solid #CBCBCB; border-left:1px solid #CBCBCB; border-right:1px solid #CBCBCB; background:#EAEAEA;}
+.view_middle {border-left:1px solid #CBCBCB; border-right:1px solid #CBCBCB; background:#EAEAEA;}
+.view_bottom {border-bottom:1px solid #CBCBCB; border-left:1px solid #CBCBCB; border-right:1px solid #CBCBCB; background:#EAEAEA; height:10px;font-size:8px;}
+
+.view_bg {background:#EAEAEA; vertical-align:top; width:19px;}
+.view_list {border:1px solid #CBCBCB; vertical-align:top; background:#FFFFFF; width:140px;}
+.view_arrow {background:#EAEAEA; vertical-align:middle; width:22px;}
+
+
+/*Åë°è¿¬º¸*/
+#table_year {margin:0; padding:0;}
+.year_left {background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_i/img_year_left.gif) no-repeat; width:6px;}
+.year_middle {background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_i/img_year_middle.gif) repeat-x; padding:6px 0;}
+.year_right {background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_i/img_year_right.gif) no-repeat; width:6px;}
+
+.year_img {width:150px;padding-right:6px;}
+.year_icon {margin-left:3px; vertical-align:middle;}
+.year_dot {margin-right:3px; vertical-align:middle;}
+
+.year_sp {width:9px;}
+.year_bl {width:75px;}
+
+.year_txt {font-size:11px; color:#505050; font-weight:bold; line-height:0px;}
+a.year_txt:link, a.year_txt:visited, a.year_txt:hover, a.year_txt:active {font-size:11px; font-weight:bold;  line-height:0px;}
+
+.year_line01 {border-bottom:1px solid #EAEAEA; padding-left:7px; padding-top:2px; padding-bottom:1px; width:95%;}
+.year_line02 {border-bottom:1px solid #EAEAEA; padding-left:7px; padding-top:2px; padding-bottom:1px;}
+.year_line03 {padding-left:7px; padding-top:2px; padding-bottom:1px;}
+.year_line_table{border:3px solid #EAEAEA;}
+.year_desc {font:bold 12px µ¸¿ò; color:#2E92A7; padding-left:10px; height:20px;}
+
+.point{font:normal 12px dotum, tahoma;color: #d6570f;padding-right:0px;font-weight:bold;}
+.civil_point {font:normal 12px dotum, tahoma;color:#666666;padding-right:0px;font-weight:bold;}
+/*type_l¿¡¼­ ³»¿ëº¸±â*/
+.desc_td_01 { font:normal 12px µ¸¿ò,µ¸¿òÃ¼,tahoma; line-height:20px; padding:7px 0 7px 23px; border-bottom:1px solid #F2F2F2; background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_l/bullet_orang_01.gif) no-repeat 10px 15px; }
+.desc_td_02 { font:normal 12px µ¸¿ò,µ¸¿òÃ¼,tahoma; line-height:20px; padding:7px 0 7px 23px;  color:#D63700;background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_l/bullet_orang_01.gif) no-repeat 10px 15px; }
+.desc_td_03 { font:normal 12px µ¸¿ò,µ¸¿òÃ¼,tahoma; line-height:20px; padding:7px 0 7px 23px; }
+.desc_td_04 { font:normal 12px µ¸¿ò,µ¸¿òÃ¼,tahoma; color:#2E92A7; line-height:20px;}
+.grp_tlt {background-color:#cccccc;font-size: 11px; color: #0063a4;font-family:tahoma;text-align:center;}
+.grp_lft {background-color:#f6f6f6;font-size: 11px; color: #4e4e4e;font-family:tahoma;text-align:center;}
+
+
+
+
+
+/*0719Ãß°¡*/
+#movie_2{background:url(http://www.nts.go.kr/wtsnts_skin/board_img/wtsnts_c/type_g/bg_movie_3.gif) no-repeat;height:300px;padding-top:30px;padding-left:0px;}
+.list_photo_csr {background:url(../../../board_img/wtsnts_c/type_f/bg_photo_csr.gif) no-repeat; text-align:center;border-bottom:0px solid #EAEAEA; width:70px; height:71px;}
+
+/*0730Ãß°¡*/
+.desc_td_title { font:bold 12px µ¸¿ò,µ¸¿òÃ¼,tahoma; padding:8px 0 8px 35px; background:url(http://www.nts.go.kr/wtsnts_skin/minwon_img/minwon_c/type_a/icon_black_arr_01.gif) no-repeat 10px 10px; }
+input.box_name{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;}
+input.box_email{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;width:200px;}
+input.box_full{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;width:97%;}
+input.box_pw{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;width:100px;}
+input.box_phone{ font:normal 12px µ¸¿ò, µ¸¿òÃ¼;color: #505050; border:1px solid #ACACAC;width:30px;margin:0 3px;}
+input.box_phone1{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;width:50px;}
+input.box_adress{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;width:300px;}
+input.box_write{font-size: 12px; color: #505050; font-family:µ¸¿ò,µ¸¿òÃ¼,tahoma;border:1px solid #acacac;width:100px; margin:0 3px; }
+
+
+
+
+.write_tit_2 {background-color:#F6F6F6;border-top:1px solid #FFFFFF;border-bottom:1px solid #EAEAEA;border-top:1px solid #EAEAEA;font-weight: bold;text-align:left;padding:8px 10px 6px 0;}
+.write_form_2 {border-bottom:1px solid #EAEAEA;border-top:1px solid #EAEAEA;padding:4px 0 4px 5px;}
+
+/*ÄÁÅÙÃ÷ ¿µ¿ª¿¡ µé¾î°¡´Â Ç¥ Çü½Ä 04*/
+#small_table_04 {border-left:1px solid #dddddd;border-top:1px solid #dddddd;margin-bottom:10px}
+#small_table_04 td {font-size:11px;line-height:20px;  border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:21px; }
+.small_table_04 {border-left:1px solid #dddddd;border-top:1px solid #dddddd;margin-bottom:10px}
+.small_table_04 td {font-size:11px;line-height:20px;  border-bottom:1px solid #dddddd; border-right:1px solid #dddddd; height:21px; }
+.small_table_04 th {font-size:11px; font-weight:normal;  border-bottom:1px solid #dddddd;border-top:1px solid #dddddd; border-right:1px solid #dddddd; height:21px; }
+
+/*
+.tabBox a {
+	background: -moz-linear-gradient(center top , #EFF0F0, #FFFFFF) repeat scroll 0 0 transparent;
+	border: 1px solid #C7C7C7;
+	box-shadow: 1px 1px #FFFFFF inset;
+	display: inline-block;
+	padding: 7px 10px;
+	text-decoration: none;
+	color: #2E92A7;
+	text-overflow: ellipsis;
+	font-weight:bold;
+}
+*/

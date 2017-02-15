@@ -1,0 +1,346 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Web.Script.Serialization;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+using System.Text;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Collections;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.Windows.Forms;
+using System.Reflection;
+
+public partial class JOB_EHM_8091 : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+    }
+
+    #region Print() : DB의 Data를 통해 출력물 Create.
+
+    /// <summary>
+    /// Print() : DB의 Data를 통해 출력물 Create.
+    ///     : input
+    ///         - DATA : Query and Argument / Option
+    ///     : output 
+    ///         - success : 출력물 파일 정보
+    ///         - else : entityProcessed (string)
+    /// </summary>
+    [WebMethod]
+    public static string Print(cRetrieveData DATA)
+    {
+        #region check Argument.
+
+        // check Argument.
+        //
+        //if (string.IsNullOrEmpty(DATA.getQuery()))
+        //{
+        //    return new JavaScriptSerializer().Serialize(
+        //                new entityProcessed<string>(
+        //                        codeProcessed.ERR_PARAM,
+        //                        "잘못된 호출입니다.")
+        //            );
+        //}
+
+        #endregion
+
+        string strReturn = string.Empty;
+
+        SqlConnection objCon = null;
+        SqlCommand objCmd = null;
+        SqlDataReader objDr = null;
+        Excel.Application objExcel = null;
+        try
+        {
+            #region connect to DB.
+
+            //  connect to DB.
+            //
+            try
+            {
+                objCon = new SqlConnection(
+                                    ConfigurationManager.ConnectionStrings["PLMDB"].ConnectionString);
+                objCon.Open();
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_SQL,
+                            "Database에 연결할 수 없습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Database 연결 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+
+            
+
+            #region prepare Office object.
+
+            string strPrint = DATA.getOption("PRINT");
+            string strPage = DATA.getOption("PAGE");
+            string strUser = DATA.getOption("USER");
+            string strTitle = DATA.getOption("TITLE");
+            string sToday = DateTime.Now.ToString("yyyyMMdd");
+
+            string sFileIdSrc = "Daily_Report";
+            string sFileIdTrg = sFileIdSrc + "_" + strUser + "_";
+            string sFileNmTrg = sFileIdTrg + "." + strPrint;
+            string strRoot = HttpContext.Current.Server.MapPath("~/");
+            string strSource = strRoot + "Report/" + strPage + "/" + sFileIdSrc + ".xlsx";
+            if (!System.IO.Directory.Exists(strRoot + "Report/" + strPage + "/" + sToday)) System.IO.Directory.CreateDirectory(strRoot + "Report/" + strPage + "/" + sToday);
+            string strTarget = strRoot + "Report/" + strPage + "/" + sToday + "/" + sFileIdTrg;
+            object objMissing = Type.Missing;
+            object varMissing = System.Reflection.Missing.Value;
+
+            Excel._Workbook objWorkBook;
+            Excel._Worksheet objWorkSheet;
+            Excel.Range objRange;
+            Excel.XlFixedFormatType enTarget = Excel.XlFixedFormatType.xlTypePDF;
+            Excel.XlFixedFormatQuality enQuality = Excel.XlFixedFormatQuality.xlQualityStandard;
+            Excel.XlFileFormat enSource = Excel.XlFileFormat.xlExcel8;
+
+            try
+            {
+                objExcel = new Excel.Application();
+                
+                objExcel.DisplayAlerts = false;
+                objExcel.Visible = false;
+                objWorkBook = objExcel.Workbooks.Open(
+                                strSource,
+                                false,
+                                true,
+                                varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing
+                                , true, varMissing, varMissing);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Office 설정 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+
+            #region reset CodeList sheet
+
+            objWorkSheet = (Excel.Worksheet)objWorkBook.Worksheets.get_Item("list");
+            if (objWorkSheet != null)
+            {
+                objWorkSheet.Delete();
+            }
+
+            int sheetcnt = objExcel.ActiveWorkbook.Sheets.Count;
+            Excel.Worksheet sheet = (Excel.Worksheet)objExcel.Worksheets.Add();
+
+            ((Excel.Worksheet)objExcel.ActiveSheet).Move(objMissing, objExcel.Worksheets[sheetcnt + 1]);
+
+            sheet.Name = "list";
+
+            #endregion
+
+            #region process get&set CodeList
+            List<List<string>> listlist = new List<List<string>>();
+            List<List<string>> sugilist = new List<List<string>>();
+
+            #region get IEHM80~87 name
+            List<string[]> strlist = new List<string[]>(); sugilist = new List<List<string>>();
+            string[] dept = { "부서", "CS", "공정", "전장", "S/W", "품질", "구매", "MKT", "H/W설계", "고객사", "업체", "N/A" };
+            string[] pay = { "유무상", "무상", "유상" };
+            string[] complete = { "완료유무", "완료", "진행중", "작업대기" };
+            string[] result = { "결론", "Close", "ING", "보류", "Drop" };
+
+            strlist.Add(dept);
+            strlist.Add(pay);
+            strlist.Add(complete);
+            strlist.Add(result);
+
+            foreach (string[] temp in strlist)
+            {
+                List<string> templist = new List<string>();
+
+                foreach (string str in temp)
+                {
+                    templist.Add(str);
+                }
+                sugilist.Add(templist);
+            }
+            #endregion
+
+            #region get IEHM80 ~ 87 value
+            string[] hcode = { "IEHM80", "IEHM81", "IEHM82", "IEHM83", "IEHM84", "IEHM85", "IEHM86", "IEHM87" };
+            string qry = "SELECT dname " +
+                         " FROM ZCODED " +
+                         "WHERE hcode = ";
+
+            List<string> resultlist;
+
+            for (int j = 0; j < hcode.Length; j++)
+            {
+                resultlist = new List<string>();
+
+                objCmd.CommandText = qry + "'" + hcode[j] + "'";
+                SqlDataReader dr = objCmd.ExecuteReader();
+
+                resultlist.Add(hcode[j]);
+                while (dr.Read())
+                {
+                    resultlist.Add(dr["dname"].ToString());
+                }
+                dr.Close();
+                listlist.Add(resultlist);
+            }
+
+            foreach (List<string> sugi in sugilist)
+            {
+                listlist.Add(sugi);
+            }
+
+            #endregion
+
+            #region naming
+            int col = 2;                 // B부터 시작
+            
+            foreach (List<string> sub_list in listlist)
+            {
+                //char asciistr = Convert.ToChar(asciinum);
+                for (int i = 2; i < sub_list.Count + 2; i++)
+                {
+                    sheet.Cells[i, col] = sub_list[i - 2];
+                }
+                col++;
+                
+                char spliter = '|';
+                string cell;
+                string startCell = "B2";
+                string endCell = "Z2";
+                string strcol = startCell.Substring(0, 1);
+                string endcol = endCell.Substring(0, 1);
+                string strrow = startCell.Substring(1, 1);
+                string endrow = endCell.Substring(1, 1);
+                
+                Excel.Range rng = sheet.Range[sheet.Cells[strrow, strcol], sheet.Cells[endrow, endcol]];
+
+                Microsoft.Office.Interop.Excel.Range xlFound = rng.EntireRow.Find(sub_list[0],
+                objMissing, Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlPart,
+                Excel.XlSearchOrder.xlByColumns, Excel.XlSearchDirection.xlNext,
+                true, objMissing, objMissing);
+
+                cell = xlFound.Column.ToString() + "|" + xlFound.Row.ToString();
+                
+
+
+
+
+                string[] c = cell.Split(spliter);
+                int colm = Int32.Parse(c[0]);
+                int row = Int32.Parse(c[1]);
+                string title;
+
+                title = sheet.Cells[row, colm].ToString();
+
+                rng = sheet.Range[sheet.Cells[row + 1, colm], sheet.Cells[sub_list.Count + 1, colm]];
+                Excel.Names names = objWorkBook.Names;
+                Excel.Name nm = names.Add(sub_list.Count + 1, rng);
+            }
+            #endregion
+            #endregion
+
+            #region save to File.
+
+            try
+            {
+                if (System.IO.File.Exists(strTarget)) System.IO.File.Delete(strTarget);
+                objWorkSheet.SaveAs(strTarget, enSource, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing);
+                if (strPrint.ToUpper() != "XLSX")
+                {
+                    if (System.IO.File.Exists(strTarget)) System.IO.File.Delete(strTarget);
+                    if (System.IO.File.Exists(strTarget + "." + strPrint)) System.IO.File.Delete(strTarget + "." + strPrint);
+                    objWorkSheet.ExportAsFixedFormat(enTarget, strTarget, enQuality, true, true, 1, varMissing, varMissing, varMissing);
+                }
+
+                
+strReturn = new JavaScriptSerializer().Serialize(
+                                new entityProcessed<string>(codeProcessed.SUCCESS, sToday + "/" + sFileNmTrg)
+                            );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Print 생성 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+        }
+        catch (Exception ex)
+        {
+            #region abnormal Closing.
+
+            // abnormal Closing.
+            //
+            strReturn = ex.Message;
+
+            #endregion
+        }
+        finally
+        {
+            #region release.
+
+            // release.
+            //
+            if (objDr != null) objDr.Close();
+            if (objCon != null) objCon.Close();
+            if (objExcel != null)
+            {
+                if(objExcel.Application.Ready)
+                {
+                    objExcel.Workbooks.Close();
+                    objExcel.Quit();
+                }
+                if (objExcel != null)
+                {
+                    System.Diagnostics.Process[] pProcess;
+                    pProcess = System.Diagnostics.Process.GetProcessesByName("Excel");
+                    pProcess[0].Kill();
+                }
+            }
+
+            #endregion
+        }
+
+        return strReturn;
+    }
+
+    #endregion
+
+
+}

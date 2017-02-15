@@ -1,0 +1,78 @@
+﻿@charset "utf-8"
+
+/* 공통제어*/
+		* { margin: 0; padding: 0; }
+        /*기안지 작성 시작 */
+        .approval_form {clear:both; _display:inline-block; *display:inline-block; _width:auto; *width:auto; margin-top:12px; border:1px solid #a1a1a1;}
+        .draft_tit{margin:0 auto; width:100%; height:30px; padding:0px 1px 0px 1px; display:block; white-space:nowrap; position:relative; text-align:center;} 
+        .draft_page {padding:33px 33px 47px 32px; border:0;}
+        h4 {margin:0 auto; font-size:24px; font-weight:bold; margin-top:17px; padding:0 auto; vertical-align:middle; text-align:center;}
+        .drop_menu {padding-left:5px;}
+
+        /* 테이블 */
+        .approval_line {border:1px solid #a1a1a1; border-collapse:collapse; font-family:굴림체; font-size: 9pt;}
+        .approval_line .tit {width:26px; white-space:nowrap; padding:0px 2px 0px 2px; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .approval_line .stmp {height:60px; padding:0px 4px 0px 4px; border:1px solid #a1a1a1; text-align:center;}
+        .approval_line th {width:80px; height:30px; white-space:nowrap; padding:0px 4px 0px 4px; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .approval_line td {height:30px; padding:0px 8px 0px 8px; border:1px solid #a1a1a1; text-align:center;}
+
+        .table_1 {margin-bottom:0px; border:1px solid #a1a1a1; border-collapse:collapse;}
+        .table_1 .tit {width:12px; margin:0; padding:0px 10px 0px 10px; background-color:#f6f6f6;}
+        .table_1_1 {border-left:1px solid #a1a1a1;}
+        .table_1_1 th { height:20px; padding-top:2px; border-bottom:1px solid #a1a1a1; text-align:center; vertical-align:middle;}
+        .la {border-top:1px dashed #a1a1a1; text-align:center; line-height:16px; padding-top:3px;}
+        .la2 {font:normal 12px dotum,'돋움' !important;}
+        .td_check {margin-top:1px 0 0 0; float:left; border:0;}
+        .td_img {padding:3px 0 0 3px; float:left;}
+        .td_txt {padding:2px 0 0 3px; float:left;}
+
+        .table_2 {width:100%; border:1px solid #a1a1a1; border-collapse:collapse; font-family:굴림체; font-size: 9pt;}
+        .table_2 th {width:1%; height:30px; white-space:nowrap; padding:0px 14px 0px 14px; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_2 td {height:30px; padding:0px 17px 0px 14px; border:1px solid #a1a1a1;}
+
+        .table_3 {clear:both; width:100%; margin-top:17px; border:1px solid #a1a1a1; border-collapse:collapse; font-family:굴림체; font-size: 9pt;}
+        .table_3 th {width:1%; height:30px; padding:0px 14px 0px 14px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_3 td {height:30px; padding:0px 17px 0px 14px; border:1px solid #a1a1a1;}
+
+        .table_4 {clear:both; width:100%; margin-top:6px; border:1px solid #a1a1a1; font-family:굴림체; font-size: 9pt;}
+        .table_4 th {width:1%; height:30px; padding:0px 14px 0px 14px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_4 td {padding:0px 0px 0px 0px;}
+
+        .table_5 {clear:both; width:100%; margin-top:18px; border:1px solid #a1a1a1; border-collapse:collapse; font-family:굴림체; font-size: 9pt;}
+        .table_5 th {width:1%; height:30px; padding:0px 14px 0px 14px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_5 td {height:30px; padding:0px 14px 0px 14px; border:1px solid #a1a1a1;}
+
+        .table_6 {clear:both; width:100%; margin-top:8px; border:1px solid #a1a1a1; border-collapse:collapse; font-family:굴림체; font-size: 9pt;}
+        .table_6 th {width:1%; height:30px; padding:0px 14px 0px 14px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_6 td {height:30px; padding:0px 14px 0px 14px; border:1px solid #a1a1a1;}
+        
+        .table_7 {clear:both; width:100%; margin-top:0px; border:1px solid #a1a1a1; border-collapse:collapse; font-family:굴림체; font-size: 9pt;}
+        .table_7 th {height:20px; padding:0px 0px 0px 0px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_7 td {height:20px; padding:0px 10px 0px 10px; border:1px solid #a1a1a1;}
+        
+        .table_8 {clear:both; width:100%; margin-top:0px; border:1px solid #a1a1a1; border-collapse:collapse; font:normal 11px dotum,'돋움';}
+        .table_8 th {height:15px; padding:0px 0px 0px 0px;  font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_8 td {height:15px; padding:0px 0px 0px 0px; border:1px solid #a1a1a1;}
+        
+        .table_9 {clear:both; width:100%; margin-top:0px; border:0px solid #a1a1a1; border-collapse:collapse; font:normal 11px dotum,'돋움';}
+        .table_9 th {height:15px; padding:0px 0px 0px 0px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:0px solid #a1a1a1; }
+        .table_9 td {height:15px; padding:0px 0px 0px 0px; border:0px solid #a1a1a1;}
+		.table_9_s {padding-left:5px;}
+		
+		.table_10 {border-collapse:collapse;}
+        .table_10 th {height:30px; white-space:nowrap; padding:0px 14px 0px 14px; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_10 td {height:30px; padding:0px 0px 0px 0px; border:1px solid #a1a1a1;}
+	
+	    .table_11 {border:0px solid #a1a1a1; border-collapse:collapse;}
+        .table_11 th {height:20px; white-space:nowrap; padding:0px 14px 0px 14px; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_11 td {height:20px; padding:0px 0px 0px 0px; border:0px }
+
+        .table_html {clear:both; width:100%; margin-top:6px; border:1px solid #a1a1a1; border-collapse:collapse;}
+        .table_html th {width:1%; height:30px; padding:0px 14px 0px 14px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_html td {padding:0px 0px 0px 0px; border:1px solid #a1a1a1;}
+
+        .table_Assist {margin-bottom:8px; border:1px solid #a1a1a1; border-collapse:collapse;}
+        .table_Assist .tit {width:12px; margin:0; padding:0px 10px 0px 10px; background-color:#f6f6f6;}
+        .table_Assist th {height:20px; padding:0px 0px 0px 0px; white-space:nowrap; font-weight:bold; background-color:#f6f6f6; border:1px solid #a1a1a1; }
+        .table_Assist_1 {border-left:1px solid #a1a1a1;}
+        .table_Assist_1 th { height:20px; padding-top:2px; border-bottom:1px solid #a1a1a1; text-align:center; vertical-align:middle;}

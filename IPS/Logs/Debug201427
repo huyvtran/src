@@ -1,0 +1,26 @@
+2014-02-07 오전 8:28:24 ==> check Argument : start
+2014-02-07 오전 8:28:24 ==> check Argument : end
+2014-02-07 오전 8:28:24 ==> Connect DB : start
+2014-02-07 오전 8:28:24 ==> Connect DB : end
+2014-02-07 오전 8:28:24 ==> get Query DB : start
+2014-02-07 오전 8:28:24 ==> get Query DB : end
+2014-02-07 오전 8:28:24 ==> create Query : start
+2014-02-07 오전 8:28:24 ==> create Query : end
+2014-02-07 오전 8:28:24 ==> prepare Office object : start
+2014-02-07 오전 8:28:24 ==> prepare Office object : define start
+2014-02-07 오전 8:28:24 ==> prepare Office object : define end
+2014-02-07 오전 8:28:24 ==> prepare Office object : construct start
+2014-02-07 오전 8:29:30 ==> prepare Office object : construct end
+2014-02-07 오전 8:29:30 ==> prepare Office object : workbook start
+2014-02-07 오전 8:29:30 ==> prepare Office object : workbook end
+2014-02-07 오전 8:29:30 ==> prepare Office object : define worksheet start
+2014-02-07 오전 8:29:30 ==> prepare Office object : define worksheet end
+2014-02-07 오전 8:29:30 ==> prepare Office object : end
+2014-02-07 오전 8:29:30 ==> process Query & set to Print : start
+2014-02-07 오전 8:29:32 ==> process Query & set to Print : end
+2014-02-07 오전 8:29:32 ==> update Status : start
+2014-02-07 오전 8:29:32 ==> update Status : end
+2014-02-07 오전 8:29:32 ==> save to File : start
+2014-02-07 오전 8:29:34 ==> save to File : end
+2014-02-07 오전 8:29:34 ==> release : start
+2014-02-07 오전 8:29:34 ==> release : end

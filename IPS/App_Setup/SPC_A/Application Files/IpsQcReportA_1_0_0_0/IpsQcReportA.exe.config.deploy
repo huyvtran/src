@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+    <connectionStrings>
+        <add name="GW.GoodPLM.Properties.Settings.PLM_NEWConnectionString"
+            connectionString="Data Source=10.10.10.21;Initial Catalog=PLM_NEW;Persist Security Info=True;User ID=plmuser;Password=plmuser"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+</configuration>

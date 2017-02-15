@@ -1,0 +1,45 @@
+﻿body{
+    font-family:'Malgun Gothic';
+    font-size:medium
+}
+
+.boxtxt{
+    vertical-align:middle;
+    display:table-cell
+}
+
+.w,.w_exp{
+    background-color:white !important;
+}
+
+.b,.b_exp{
+    background-color:#7aedff !important;
+}
+
+.s,.s_exp{
+    background-color:#d2d2d2 !important;
+}
+
+.y,.y_exp {
+    background-color:#f2ff9e !important;
+}
+.w,.y,.b,.s {
+    display:table;cursor:pointer
+}
+.explan{
+    font-size:12px
+}
+.hover{
+    background:rgba(036,036,036,.3);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#32191919, endColorstr=#32191919)";   /*For IE 8*/
+}
+.Aarea{
+    font-size:medium;
+}
+.Barea,.Carea{
+    font-size:small;
+}
+/*.w      {background-color:white !important}
+.b      {background-color:#7aedff !important;}
+.s      {background-color:#c9ccc4 !important;}
+.y      {background-color:#eef59f !important;}*/

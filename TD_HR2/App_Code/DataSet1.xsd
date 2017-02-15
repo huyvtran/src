@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:CaseSensitive="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="item_dlv" msdata:CaseSensitive="True" msprop:Generator_TableClassName="item_dlvDataTable" msprop:Generator_TableVarName="tableitem_dlv" msprop:Generator_TablePropName="item_dlv" msprop:Generator_RowDeletingName="item_dlvRowDeleting" msprop:Generator_RowChangingName="item_dlvRowChanging" msprop:Generator_RowEvHandlerName="item_dlvRowChangeEventHandler" msprop:Generator_RowDeletedName="item_dlvRowDeleted" msprop:Generator_UserTableName="item_dlv" msprop:Generator_RowChangedName="item_dlvRowChanged" msprop:Generator_RowEvArgName="item_dlvRowChangeEvent" msprop:Generator_RowClassName="item_dlvRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="item_cd" msprop:Generator_ColumnVarNameInTable="columnitem_cd" msprop:Generator_ColumnPropNameInRow="item_cd" msprop:Generator_ColumnPropNameInTable="item_cdColumn" msprop:Generator_UserColumnName="item_cd" type="xs:string" minOccurs="0" />
+              <xs:element name="item_nm" msprop:Generator_ColumnVarNameInTable="columnitem_nm" msprop:Generator_ColumnPropNameInRow="item_nm" msprop:Generator_ColumnPropNameInTable="item_nmColumn" msprop:Generator_UserColumnName="item_nm" type="xs:string" minOccurs="0" />
+              <xs:element name="item_spec" msprop:Generator_ColumnVarNameInTable="columnitem_spec" msprop:Generator_ColumnPropNameInRow="item_spec" msprop:Generator_ColumnPropNameInTable="item_specColumn" msprop:Generator_UserColumnName="item_spec" type="xs:string" minOccurs="0" />
+              <xs:element name="proj_no" msprop:Generator_ColumnVarNameInTable="columnproj_no" msprop:Generator_ColumnPropNameInRow="proj_no" msprop:Generator_ColumnPropNameInTable="proj_noColumn" msprop:Generator_UserColumnName="proj_no" type="xs:string" minOccurs="0" />
+              <xs:element name="dlv_qty" msprop:Generator_ColumnVarNameInTable="columndlv_qty" msprop:Generator_ColumnPropNameInRow="dlv_qty" msprop:Generator_ColumnPropNameInTable="dlv_qtyColumn" msprop:Generator_UserColumnName="dlv_qty" type="xs:string" minOccurs="0" />
+              <xs:element name="barcode" msprop:Generator_ColumnVarNameInTable="columnbarcode" msprop:Generator_ColumnPropNameInRow="barcode" msprop:Generator_ColumnPropNameInTable="barcodeColumn" msprop:Generator_UserColumnName="barcode" type="xs:string" minOccurs="0" />
+              <xs:element name="barcoded" msprop:Generator_ColumnVarNameInTable="columnbarcoded" msprop:Generator_ColumnPropNameInRow="barcoded" msprop:Generator_ColumnPropNameInTable="barcodedColumn" msprop:Generator_UserColumnName="barcoded" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

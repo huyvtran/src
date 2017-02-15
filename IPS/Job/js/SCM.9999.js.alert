@@ -1,0 +1,46 @@
+﻿
+
+var gw_job_process = {
+
+    
+    ready: function () {
+        top.window.opener = 'nothing';
+        top.window.open('', '_parent', '');
+        top.window.close();
+
+        alertNoData();
+    }  
+};
+
+function alertNoData() {
+    var sub_cat_no = gw_com_api.getPageParameter("sub_cat_no");
+    sub_cat_no = sub_cat_no.toLowerCase();
+
+    var title;
+    switch (sub_cat_no) {
+        case "s22":
+            title = "변경점";
+            break;
+        case "s23":
+            title = "도면 정보";
+            break;
+        case "s41":
+            title = "성적서";
+            break;
+        case "s56":
+            title = "제조필요문서";
+            break;
+        default:
+            title = "";
+    }
+
+    if (title != "") {
+        title = " [" + title + "] ";
+    }
+
+    window.onbeforeunload = function () {
+        return "표시할 " + title + "데이터가 없습니다.";
+    };
+}
+
+

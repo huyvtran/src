@@ -1,0 +1,104 @@
+2014-02-06 오후 8:06:15 ==> check Argument : start
+2014-02-06 오후 8:06:15 ==> check Argument : end
+2014-02-06 오후 8:06:15 ==> Connect DB : start
+2014-02-06 오후 8:06:15 ==> Connect DB : end
+2014-02-06 오후 8:06:15 ==> get Query DB : start
+2014-02-06 오후 8:06:15 ==> get Query DB : end
+2014-02-06 오후 8:06:15 ==> create Query : start
+2014-02-06 오후 8:06:15 ==> create Query : end
+2014-02-06 오후 8:06:15 ==> prepare Office object : start
+2014-02-06 오후 8:06:15 ==> prepare Office object : define start
+2014-02-06 오후 8:06:15 ==> prepare Office object : define end
+2014-02-06 오후 8:06:15 ==> prepare Office object : construct start
+2014-02-06 오후 8:07:45 ==> prepare Office object : construct end
+2014-02-06 오후 8:07:45 ==> prepare Office object : workbook start
+2014-02-06 오후 8:07:45 ==> prepare Office object : workbook end
+2014-02-06 오후 8:07:45 ==> prepare Office object : define worksheet start
+2014-02-06 오후 8:07:45 ==> prepare Office object : define worksheet end
+2014-02-06 오후 8:07:45 ==> prepare Office object : end
+2014-02-06 오후 8:07:45 ==> process Query & set to Print : start
+2014-02-06 오후 8:07:47 ==> process Query & set to Print : end
+2014-02-06 오후 8:07:47 ==> update Status : start
+2014-02-06 오후 8:07:47 ==> update Status : end
+2014-02-06 오후 8:07:47 ==> save to File : start
+2014-02-06 오후 8:07:48 ==> save to File : end
+2014-02-06 오후 8:07:48 ==> release : start
+2014-02-06 오후 8:07:48 ==> release : end
+2014-02-06 오후 8:07:56 ==> check Argument : start
+2014-02-06 오후 8:07:56 ==> check Argument : end
+2014-02-06 오후 8:07:56 ==> Connect DB : start
+2014-02-06 오후 8:07:56 ==> Connect DB : end
+2014-02-06 오후 8:07:56 ==> get Query DB : start
+2014-02-06 오후 8:07:56 ==> get Query DB : end
+2014-02-06 오후 8:07:56 ==> create Query : start
+2014-02-06 오후 8:07:56 ==> create Query : end
+2014-02-06 오후 8:07:56 ==> prepare Office object : start
+2014-02-06 오후 8:07:56 ==> prepare Office object : define start
+2014-02-06 오후 8:07:56 ==> prepare Office object : define end
+2014-02-06 오후 8:07:56 ==> prepare Office object : construct start
+2014-02-06 오후 8:09:09 ==> prepare Office object : construct end
+2014-02-06 오후 8:09:09 ==> prepare Office object : workbook start
+2014-02-06 오후 8:09:10 ==> prepare Office object : workbook end
+2014-02-06 오후 8:09:10 ==> prepare Office object : define worksheet start
+2014-02-06 오후 8:09:10 ==> prepare Office object : define worksheet end
+2014-02-06 오후 8:09:10 ==> prepare Office object : end
+2014-02-06 오후 8:09:10 ==> process Query & set to Print : start
+2014-02-06 오후 8:09:12 ==> process Query & set to Print : end
+2014-02-06 오후 8:09:12 ==> update Status : start
+2014-02-06 오후 8:09:12 ==> update Status : end
+2014-02-06 오후 8:09:12 ==> save to File : start
+2014-02-06 오후 8:09:12 ==> save to File : end
+2014-02-06 오후 8:09:12 ==> release : start
+2014-02-06 오후 8:09:12 ==> release : end
+2014-02-06 오후 8:40:43 ==> check Argument : start
+2014-02-06 오후 8:40:43 ==> check Argument : end
+2014-02-06 오후 8:40:43 ==> Connect DB : start
+2014-02-06 오후 8:40:43 ==> Connect DB : end
+2014-02-06 오후 8:40:43 ==> get Query DB : start
+2014-02-06 오후 8:40:43 ==> get Query DB : end
+2014-02-06 오후 8:40:43 ==> create Query : start
+2014-02-06 오후 8:40:43 ==> create Query : end
+2014-02-06 오후 8:40:43 ==> prepare Office object : start
+2014-02-06 오후 8:40:43 ==> prepare Office object : define start
+2014-02-06 오후 8:40:43 ==> prepare Office object : define end
+2014-02-06 오후 8:40:43 ==> prepare Office object : construct start
+2014-02-06 오후 8:41:50 ==> prepare Office object : construct end
+2014-02-06 오후 8:41:50 ==> prepare Office object : workbook start
+2014-02-06 오후 8:41:50 ==> prepare Office object : workbook end
+2014-02-06 오후 8:41:50 ==> prepare Office object : define worksheet start
+2014-02-06 오후 8:41:50 ==> prepare Office object : define worksheet end
+2014-02-06 오후 8:41:50 ==> prepare Office object : end
+2014-02-06 오후 8:41:50 ==> process Query & set to Print : start
+2014-02-06 오후 8:41:51 ==> process Query & set to Print : end
+2014-02-06 오후 8:41:51 ==> update Status : start
+2014-02-06 오후 8:41:51 ==> update Status : end
+2014-02-06 오후 8:41:51 ==> save to File : start
+2014-02-06 오후 8:41:52 ==> save to File : end
+2014-02-06 오후 8:41:52 ==> release : start
+2014-02-06 오후 8:41:52 ==> release : end
+2014-02-06 오후 8:42:56 ==> check Argument : start
+2014-02-06 오후 8:42:56 ==> check Argument : end
+2014-02-06 오후 8:42:56 ==> Connect DB : start
+2014-02-06 오후 8:42:56 ==> Connect DB : end
+2014-02-06 오후 8:42:56 ==> get Query DB : start
+2014-02-06 오후 8:42:56 ==> get Query DB : end
+2014-02-06 오후 8:42:56 ==> create Query : start
+2014-02-06 오후 8:42:56 ==> create Query : end
+2014-02-06 오후 8:42:56 ==> prepare Office object : start
+2014-02-06 오후 8:42:56 ==> prepare Office object : define start
+2014-02-06 오후 8:42:56 ==> prepare Office object : define end
+2014-02-06 오후 8:42:56 ==> prepare Office object : construct start
+2014-02-06 오후 8:44:03 ==> prepare Office object : construct end
+2014-02-06 오후 8:44:03 ==> prepare Office object : workbook start
+2014-02-06 오후 8:44:03 ==> prepare Office object : workbook end
+2014-02-06 오후 8:44:03 ==> prepare Office object : define worksheet start
+2014-02-06 오후 8:44:03 ==> prepare Office object : define worksheet end
+2014-02-06 오후 8:44:03 ==> prepare Office object : end
+2014-02-06 오후 8:44:03 ==> process Query & set to Print : start
+2014-02-06 오후 8:44:05 ==> process Query & set to Print : end
+2014-02-06 오후 8:44:05 ==> update Status : start
+2014-02-06 오후 8:44:05 ==> update Status : end
+2014-02-06 오후 8:44:05 ==> save to File : start
+2014-02-06 오후 8:44:06 ==> save to File : end
+2014-02-06 오후 8:44:06 ==> release : start
+2014-02-06 오후 8:44:06 ==> release : end

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <connectionStrings>
+      <add name="TERAConnectionA" connectionString="Data source=192.168.20.10;initial catalog=GoodPLM_TERA;Persist Security Info=true;user id=goodplm;password=goodplm!@#" providerName="System.Data.SqlClient"/>
+      <add name="TERAConnectionB" connectionString="Data source=210.206.8.10;initial catalog=GoodPLM_TERA;Persist Security Info=true;user id=goodplm;password=goodplm!@#" providerName="System.Data.SqlClient"/>
+      <add name="TERAConnection" connectionString="Data source=goodware.co.kr;initial catalog=GoodPLM_TERA;Persist Security Info=true;user id=goodplm;password=goodplm!@#" providerName="System.Data.SqlClient"/>
+    </connectionStrings>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup></configuration>

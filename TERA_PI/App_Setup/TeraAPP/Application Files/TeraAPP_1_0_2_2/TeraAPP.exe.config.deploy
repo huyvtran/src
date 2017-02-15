@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="GW.GoodPLM.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+        </sectionGroup>
+    </configSections>
+    <connectionStrings>
+        <add name="GW.GoodPLM.Properties.Settings.GoodPLM_TERAConnectionString"
+            connectionString="Data Source=goodware.co.kr;Initial Catalog=GoodPLM_TERA;Persist Security Info=True;User ID=goodplm;Password=goodplm!@#"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+    </startup>
+    <userSettings>
+        <GW.GoodPLM.Properties.Settings>
+            <setting name="DeployURL_Test" serializeAs="String">
+                <value>http://terapi.goodware.co.kr/App_Setup/KPI/</value>
+            </setting>
+            <setting name="DeployURL_Tera" serializeAs="String">
+                <value>http://pi.terasemicon.com/App_Setup/KPI/</value>
+            </setting>
+        </GW.GoodPLM.Properties.Settings>
+    </userSettings>
+</configuration>

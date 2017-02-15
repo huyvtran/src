@@ -1,0 +1,660 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Web.Script.Serialization;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+using System.Text;
+using System.Collections;
+using System.Collections.Specialized;
+using System.Configuration;
+using Microsoft.Office.Core;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
+using CreateLogFiles;
+
+public partial class Job_w_srm1030 : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+    }
+
+    #region Print() : DB의 Data를 통해 출력물 Create.
+
+    /// <summary>
+    /// Print() : DB의 Data를 통해 출력물 Create.
+    ///     : input
+    ///         - DATA : Query and Argument / Option
+    ///     : output 
+    ///         - success : 출력물 파일 정보
+    ///         - else : entityProcessed (string)
+    /// </summary>
+    [WebMethod]
+    public static string Print(cRetrieveData DATA)
+    {
+        CreateLogFiles.CreateLogFiles Err = new CreateLogFiles.CreateLogFiles();
+
+        Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "check Argument : start");
+        #region check Argument.
+
+        // check Argument.
+        //
+        if (string.IsNullOrEmpty(DATA.getQuery()))
+        {
+            return new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                                codeProcessed.ERR_PARAM,
+                                "잘못된 호출입니다.")
+                    );
+        }
+
+        #endregion
+        Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "check Argument : end");
+
+        string strReturn  = string.Empty;
+
+        SqlConnection objCon = null;
+        SqlCommand objCmd = null;
+        SqlDataReader objDr = null;
+        Excel.Application objExcel = null;
+        try
+        {
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "Connect DB : start");
+            #region connect to DB.
+
+            //  connect to DB.
+            //
+            try
+            {
+                objCon = new SqlConnection(
+                                    ConfigurationManager.ConnectionStrings["PLMDB"].ConnectionString);
+                objCon.Open();
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_SQL,
+                            "Database에 연결할 수 없습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Database 연결 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "Connect DB : end");
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "get Query DB : start");
+            #region get Query from DB.
+
+            string strSQL = string.Empty;
+            string strBody = string.Empty;
+            try
+            {
+                strSQL = string.Format(@"
+                            SELECT
+                                qry_sel AS QUERY_SELECT
+                            FROM ZQUERY
+                            WHERE qry_id = '{0}'",
+                            DATA.getQuery());
+                objCmd = new SqlCommand(strSQL, objCon);
+                objDr = objCmd.ExecuteReader();
+
+                if (objDr.Read())
+                {
+                    strBody = objDr["QUERY_SELECT"].ToString();
+                    objDr.Close();
+                }
+                else
+                {
+                    throw new Exception(
+                        "관련 Query를 찾을 수 없습니다.");
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_SQL,
+                            "Query 조회에 실패하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Query 조회에 실패하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "get Query DB : end");
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "create Query : start");
+            #region create Query.
+
+            if (DATA.getArgument().getSize() > 0)
+            {
+                #region get Argument from DB.
+
+                Hashtable tblSelect = new Hashtable();
+                try
+                {
+                    strSQL = string.Format(@"
+                                SELECT
+                                    arg_id AS ARG_ID,
+                                    arg_tp AS ARG_TYPE,
+                                    arg_qry AS ARG_QUERY
+                                FROM ZQUERY_ARG
+                                WHERE qry_id = '{0}'",
+                                DATA.getQuery()
+                                );
+                    objCmd.CommandText = strSQL;
+                    objDr = objCmd.ExecuteReader();
+
+                    while (objDr.Read())
+                    {
+                        tblSelect.Add(
+                            objDr["ARG_ID"].ToString(),
+                            new cDBArgument(
+                                objDr["ARG_TYPE"].ToString(),
+                                objDr["ARG_QUERY"].ToString())
+                            );
+                    }
+                    objDr.Close();
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception(
+                        new JavaScriptSerializer().Serialize(
+                            new entityProcessed<string>(
+                                codeProcessed.ERR_SQL,
+                                "Query Argument 조회에 실패하였습니다.\n- " + ex.Message)
+                            )
+                        );
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(
+                        new JavaScriptSerializer().Serialize(
+                            new entityProcessed<string>(
+                                codeProcessed.ERR_PROCESS,
+                                "Query Argument 조회에 실패하였습니다.\n- " + ex.Message)
+                            )
+                        );
+                }
+
+                #endregion
+
+                #region bind Argument to Query.
+
+                try
+                {
+                    for (int iAry = 0; iAry < DATA.getArgument().getSize(); iAry++)
+                    {
+                        string strArg = DATA.ARGUMENT.NAME[iAry];
+                        cDBArgument objArg = (cDBArgument)tblSelect[strArg];
+                        if (objArg == null)
+                        {
+                            throw new Exception(
+                                strArg + " - 관련 Argument를 찾을 수 없습니다.");
+                        }
+                        strBody = objArg.convertWhere(
+                                            strBody,
+                                            DATA.getQuery(),
+                                            strArg,
+                                            HttpUtility.UrlDecode(DATA.ARGUMENT.VALUE[iAry])
+                                        );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(
+                        new JavaScriptSerializer().Serialize(
+                            new entityProcessed<string>(
+                                    codeProcessed.ERR_PROCESS,
+                                    "Query 생성에 실패하였습니다.\n- " + ex.Message)
+                            )
+                        );
+                }
+
+                #endregion
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "create Query : end");
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : start");
+            #region prepare Office object.
+
+            string strPrint = DATA.getOption("PRINT");
+            string strPage = DATA.getOption("PAGE");
+            string strKey = DATA.getOption("KEY");
+            
+            string strRoot = HttpContext.Current.Server.MapPath("~/");
+            string strSource = strRoot + "Report/" + strPage + "/" + strPage + 
+                                ((DATA.getQuery() == "w_srm1030_2") ? "_5" : "_6") + ".xls";
+            string strTarget = strRoot + "Report/" + strPage + "/" + strPage + "_" + strKey;
+            object objMissing = Type.Missing;
+            object varMissing = System.Reflection.Missing.Value;
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : define start");
+            Excel._Workbook objWorkBook;
+            Excel._Worksheet objWorkSheet;
+            Excel.Range objRange;
+            Excel.XlFixedFormatType enTarget = Excel.XlFixedFormatType.xlTypePDF;
+            Excel.XlFixedFormatQuality enQuality = Excel.XlFixedFormatQuality.xlQualityStandard;
+            Excel.XlFileFormat enSource = Excel.XlFileFormat.xlExcel8;
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : define end");
+
+            try
+            {
+                Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : construct start");
+                objExcel = new Excel.Application();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : construct end");
+                objExcel.DisplayAlerts = false;
+                objExcel.Visible = false;
+                objExcel.DisplayAlerts = false;
+                objExcel.Visible = false;
+                Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : workbook start");
+                objWorkBook = objExcel.Workbooks.Open(
+                                strSource,
+                                false,
+                                true,
+                                varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing);
+                Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : workbook end");
+                Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : define worksheet start");
+                objWorkSheet = (Excel.Worksheet)objWorkBook.Sheets[1];
+                Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : define worksheet end");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Office 설정 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "prepare Office object : end");
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "process Query & set to Print : start");
+            #region process Query & set to Print.
+
+            try
+            {
+                objCmd.CommandText = strBody;
+                objDr = objCmd.ExecuteReader();
+
+                if (DATA.getQuery() == "w_srm1030_2")
+                {
+                    int iRow = 14; // refer to Proto file.
+                    decimal fTotal = 0;
+                    string strRemark = string.Empty;
+                    bool bHeader = true;
+
+                    while (objDr.Read())
+                    {
+                        if (bHeader)
+                        {
+                            objWorkSheet.Cells[5, 4] = objDr["pur_no"].ToString();
+                            objWorkSheet.Cells[6, 4] = objDr["pur_date"].ToString();
+                            objWorkSheet.Cells[7, 4] = objDr["supply_nm"].ToString();
+                            objWorkSheet.Cells[8, 4] = objDr["pay_meth"].ToString();
+                            objWorkSheet.Cells[9, 4] = objDr["dlv_place"].ToString();
+                            objWorkSheet.Cells[10, 4] = objDr["dlv_loc"].ToString();
+                            string[] aryEmployee = objDr["emp_no"].ToString().Split('/');
+                            objWorkSheet.Cells[6, 11] = aryEmployee[0];
+                            if (aryEmployee.Length > 1)
+                            {
+                                string[] aryContact = aryEmployee[1].Split(',');
+                                objWorkSheet.Cells[7, 11] = aryContact[0];
+                                if (aryContact.Length > 1)
+                                    objWorkSheet.Cells[8, 11] = aryContact[1];
+                            }
+                            objWorkSheet.Cells[6, 14] = objDr["cust_emp"].ToString();
+                            objWorkSheet.Cells[7, 14] = objDr["cust_tel"].ToString();
+                            objWorkSheet.Cells[8, 14] = objDr["cust_fax"].ToString();
+                            if (objDr["vat_yn"].ToString() == "1")
+                                objWorkSheet.Cells[12, 14] = "(V.A.T별도)";
+                            else
+                                objWorkSheet.Cells[12, 14] = "(V.A.T포함)";
+                            strRemark = objDr["rmk"].ToString();
+                            bHeader = false;
+                        }
+
+                        objWorkSheet.Cells[iRow, 2] = iRow - 13; //순번
+                        objRange = objWorkSheet.get_Range("C" + iRow.ToString(), "D" + iRow.ToString());
+                        objRange.MergeCells = true;
+                        objWorkSheet.Cells[iRow, 3] = objDr["item_cd"].ToString();
+                        objWorkSheet.Cells[iRow, 5] = objDr["item_nm"].ToString();
+                        objWorkSheet.Cells[iRow, 6] = objDr["item_spec"].ToString();
+                        objWorkSheet.Cells[iRow, 7] = objDr["projkey"].ToString();
+                        objWorkSheet.Cells[iRow, 8] = objDr["prc_cd"].ToString();
+                        objWorkSheet.Cells[iRow, 9] = objDr["pur_unit"].ToString();
+                        objWorkSheet.Cells[iRow, 10] = Convert.ToDecimal(objDr["pur_qty"]);
+                        objWorkSheet.Cells[iRow, 11] = Convert.ToDecimal(objDr["pur_price"]);
+                        objWorkSheet.Cells[iRow, 12] = objDr["curr_cd"].ToString();
+                        objWorkSheet.Cells[iRow, 13] = Convert.ToDecimal(objDr["pur_amt"]);
+                        objWorkSheet.Cells[iRow, 14] = objDr["req_date"].ToString();
+                        objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "N" + iRow.ToString());
+                        cExcel.drawLine(objRange, 1);
+                        fTotal += Convert.ToDecimal(objDr["pur_amt"]);
+                        iRow++;
+                    }
+                    objDr.Close();
+
+                    objWorkSheet.Cells[12, 13] = fTotal;
+
+                    int iSkip = 32 - iRow;
+                    iRow += ((iSkip < 0) ? 1 : iSkip);
+                    objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "J" + (iRow + 4).ToString());
+                    objRange.MergeCells = true;
+                    objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                    objRange.Font.Size = 9;
+                    objWorkSheet.Cells[iRow, 2] = " - 원익아이피에스 SRM시스템(http://srm.ips.co.kr)에서 납품예정일 등록 시 본 발주서 출력 가능하며, 납품예정일 변경 시 수시로 수정 바랍니다."
+                                                    + "\n" + " - 요청 납기보다 납품이 늦어질 경우 즉시 구매담당자에게 연락 바랍니다."
+                                                    + "\n" + " - 세금계산서의 발행은 당사의 검사기준에 의거 합격품에 한하며, 납품 시 본 주문서 및 주문서와 동일한 품목, 수량, 단가 등으로 작성된 납품서(거래명세서)를 제시하여야 합니다."
+                                                    + "\n" + " - 물품의 검수, 검사는 당사의 검수, 검사규정에 의하여 실시하며, 당사가 사용도중 발생되는 품질문제의 원인이 납품자재 자체에 있을 경우에는 귀사의 책임으로 변상해야 합니다."
+                                                    + "\n" + " - 귀사의 납기지연이나 정상적인 물품의 입고가 불가능할 경우 당사는 귀사와 협의하여 발주를 취소할 수 있습니다."
+                                                    + "\n" + " - 상기 언급되지 않은 사항은 귀사와 당사간에 체결한 기본거래계약에 따릅니다.";
+                    cExcel.drawLine(objRange, 1);
+                    objWorkSheet.Cells[iRow, 11] = "  ※ 특기사항";
+                    objRange = objWorkSheet.get_Range("K" + iRow.ToString(), "N" + iRow.ToString());
+                    objRange.MergeCells = true;
+                    objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                    cExcel.drawLine(objRange, 1);
+                    objRange = objWorkSheet.get_Range("K" + (iRow + 1).ToString(), "N" + (iRow + 4).ToString());
+                    objRange.MergeCells = true;
+                    objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                    objRange.Font.Size = 9;
+                    objWorkSheet.Cells[iRow + 1, 11] = strRemark.Replace("\a", "\n");
+                    objRange.WrapText = true;
+                    cExcel.drawLine(objRange, 1);
+
+                    iRow += 5;
+                    objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "N" + iRow.ToString());
+                    objRange.RowHeight = 9.75;
+                    objRange = objWorkSheet.get_Range("A1", "O" + iRow.ToString());
+                    cExcel.drawBorder(objRange, Excel.XlBorderWeight.xlMedium);
+                }
+                else
+                {
+                    int iRow = 18; // refer to Proto file.
+                    decimal fTotal = 0;
+                    string strRemark = string.Empty;
+                    bool bHeader = true;
+
+                    while (objDr.Read())
+                    {
+                        if (bHeader)
+                        {
+                            objWorkSheet.Cells[8, 4] = ": " + objDr["pur_no"].ToString();
+                            objWorkSheet.Cells[9, 4] = ": " + objDr["pur_date"].ToString();
+                            objWorkSheet.Cells[10, 4] = ": " + objDr["supply_nm"].ToString();
+                            objWorkSheet.Cells[11, 4] = ": " + objDr["pay_meth"].ToString();
+                            objWorkSheet.Cells[12, 4] = ": ";
+                            objWorkSheet.Cells[13, 4] = ": ";
+                            objWorkSheet.Cells[14, 4] = ": ";
+                            objWorkSheet.Cells[15, 4] = ": " + objDr["dlv_loc"].ToString();
+                            string[] aryEmployee = objDr["emp_no"].ToString().Split('/');
+                            if (aryEmployee.Length > 1)
+                            {
+                                string[] aryContact = aryEmployee[1].Split(',');
+                                objWorkSheet.Cells[10, 14] = aryContact[0];
+                                if (aryContact.Length > 1)
+                                    objWorkSheet.Cells[11, 14] = aryContact[1];
+                                if (aryEmployee.Length > 2)
+                                    objWorkSheet.Cells[9, 14] = aryEmployee[2];
+                            }
+                            objWorkSheet.Cells[16, 12] = objDr["curr_nm"].ToString();
+                            strRemark = objDr["rmk"].ToString();
+                            bHeader = false;
+                        }
+
+                        objWorkSheet.Cells[iRow, 2] = iRow - 17; //순번
+                        objWorkSheet.Cells[iRow, 3] = objDr["item_cd"].ToString();
+                        objWorkSheet.Cells[iRow, 5] = objDr["item_nm"].ToString();
+                        objWorkSheet.Cells[iRow, 6] = objDr["item_spec"].ToString();
+                        objWorkSheet.Cells[iRow, 7] = objDr["projkey"].ToString();
+                        objWorkSheet.Cells[iRow, 9] = objDr["pur_unit"].ToString();
+                        objWorkSheet.Cells[iRow, 10] = Convert.ToDecimal(objDr["pur_qty"]);
+                        objWorkSheet.Cells[iRow, 11] = Convert.ToDecimal(objDr["pur_price"]);
+                        objWorkSheet.Cells[iRow, 12] = objDr["curr_cd"].ToString();
+                        objWorkSheet.Cells[iRow, 13] = Convert.ToDecimal(objDr["pur_amt"]);
+                        objWorkSheet.Cells[iRow, 15] = objDr["req_date"].ToString();
+                        objRange = objWorkSheet.get_Range("C" + iRow.ToString(), "D" + iRow.ToString());
+                        objRange.MergeCells = true;
+                        objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        objRange = objWorkSheet.get_Range("M" + iRow.ToString(), "N" + iRow.ToString());
+                        objRange.MergeCells = true;
+                        objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                        objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "O" + iRow.ToString());
+                        cExcel.drawLine(objRange, 1);
+                        fTotal += Convert.ToDecimal(objDr["pur_amt"]);
+                        iRow++;
+                    }
+                    objDr.Close();
+
+                    objWorkSheet.Cells[16, 13] = fTotal;
+
+                    int iSkip = 30 - iRow;
+                    iRow += ((iSkip < 0) ? 1 : iSkip);
+                    /*
+                    objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "O" + (iRow + 5).ToString());
+                    objRange.MergeCells = true;
+                    objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                    objWorkSheet.Cells[iRow, 2] = " * Please signify your acceptance of this purchase order by inputting expected delivery date within seven days in WONIK IPS SRM system. (http://srm.ips.co.kr)"
+                                                    + "\n" + " * Supplier must give a notice to Purchaser if requested delivery date is delayed."
+                                                    + "\n" + " * Supplier herein shall indemnify Purchaser against any and all claims(including patent infringement) arising out of or in related to the purchase of the above items according to this"
+                                                    + "\n" + "   Purchase Order. Such indemnification shall include indemnification against any and all claims whether such claims are direct, indirect, or incidental to the purchase of the above items"
+                                                    + "\n" + "   according to Purchase Order. Further, such indemnification shall also include, but not limited to, reimbursement of all costs and expenses(including attorney's fee) for defending "
+                                                    + "\n" + "   such claims resulted from the Purchase of the above items.";
+                    cExcel.drawBorder(objRange, Excel.XlBorderWeight.xlThin);
+                    */
+                    objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "J" + (iRow + 7).ToString());
+                    objRange.MergeCells = true;
+                    objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                    objWorkSheet.Cells[iRow, 2] = " * Please signify your acceptance of this purchase order by inputting expected delivery date within seven days in WONIK IPS SRM "
+                                                    + "\n" + "   system. (http://srm.ips.co.kr)"
+                                                    + "\n" + " * Supplier must give a notice to Purchaser if requested delivery date is delayed."
+                                                    + "\n" + " * Supplier herein shall indemnify Purchaser against any and all claims(including patent infringement) arising out of or in related to "
+                                                    + "\n" + "   the purchase of the above items according to this Purchase Order. Such indemnification shall include indemnification against any "
+                                                    + "\n" + "   and all claims whether such claims are direct, indirect, or incidental to the purchase of the above items according to Purchase Order."
+                                                    + "\n" + "   Further, such indemnification shall also include, but not limited to, reimbursement of all costs and expenses(including attorney's fee) "
+                                                    + "\n" + "   for defending such claims resulted from the Purchase of the above items.";
+                    cExcel.drawBorder(objRange, Excel.XlBorderWeight.xlThin);
+                    objRange = objWorkSheet.get_Range("K" + iRow.ToString(), "O" + (iRow + 7).ToString());
+                    objRange.MergeCells = true;
+                    objRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                    objWorkSheet.Cells[iRow, 11] = strRemark.Replace("\a", "\n");
+                    objRange.WrapText = true;
+                    cExcel.drawBorder(objRange, Excel.XlBorderWeight.xlThin);                    
+
+                    iRow += 8;
+                    objRange = objWorkSheet.get_Range("B" + iRow.ToString(), "O" + iRow.ToString());
+                    objRange.RowHeight = 9.75;
+                    objRange = objWorkSheet.get_Range("A1", "P" + iRow.ToString());
+                    cExcel.drawBorder(objRange, Excel.XlBorderWeight.xlMedium);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_SQL,
+                            "Data 조회에 실패하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Data 조회 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "process Query & set to Print : end");
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "update Status : start");
+            #region update Status.
+
+            string strSave = DATA.getOption("SAVE");
+            if (strSave == "1")
+            {
+                try
+                {
+                    string strQuery = @"
+                        UPDATE SM_PUR 
+                        SET    cust_dt = CASE WHEN ISNULL(cust_dt, '') = '' THEN GETDATE() ELSE cust_dt END,
+                               checked_dt = CASE WHEN ISNULL(checked_dt, '') < GETDATE() THEN GETDATE() ELSE checked_dt END,
+                               print_dt = CASE WHEN ISNULL(print_dt, '') = '' THEN GETDATE() ELSE print_dt END,
+                               printed_dt = CASE WHEN ISNULL(printed_dt, '') < GETDATE() THEN GETDATE() ELSE printed_dt END
+                        WHERE  pur_no = '" + DATA.getArgument("argPur_no") + "'";
+                    cDBQuery objQuery = new cDBQuery(ruleQuery.INLINE, strQuery);
+                    objQuery.executeQuery(objCmd, true);
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception(
+                        new JavaScriptSerializer().Serialize(
+                            new entityProcessed<string>(
+                                codeProcessed.ERR_SQL,
+                                "출력 정보 저장에 실패하였습니다.\n- " + ex.Message)
+                        )
+                    );
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(
+                        new JavaScriptSerializer().Serialize(
+                            new entityProcessed<string>(
+                                codeProcessed.ERR_PROCESS,
+                                "출력 정보 저장 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+                }
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "update Status : end");
+
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "save to File : start");
+            #region save to File.
+
+            try
+            {
+                if (System.IO.File.Exists(strTarget))
+                    System.IO.File.Delete(strTarget);
+                objWorkSheet.SaveAs(
+                                strTarget,
+                                enSource,
+                                varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing, varMissing);
+                if (System.IO.File.Exists(strTarget))
+                    System.IO.File.Delete(strTarget);
+
+                if (System.IO.File.Exists(strTarget + "." + strPrint))
+                    System.IO.File.Delete(strTarget + "." + strPrint);
+                objWorkSheet.ExportAsFixedFormat(
+                                enTarget,
+                                strTarget,
+                                enQuality,
+                                true,
+                                true,
+                                1,
+                                100,
+                                false,
+                                varMissing);
+
+                strReturn = new JavaScriptSerializer().Serialize(
+                                new entityProcessed<string>(
+                                    codeProcessed.SUCCESS,
+                                    strPage + "_" + strKey + "." + strPrint)
+                            );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    new JavaScriptSerializer().Serialize(
+                        new entityProcessed<string>(
+                            codeProcessed.ERR_PROCESS,
+                            "Print 생성 중에 오류가 발생하였습니다.\n- " + ex.Message)
+                        )
+                    );
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "save to File : end");
+        }
+        catch (Exception ex)
+        {
+            #region abnormal Closing.
+
+            // abnormal Closing.
+            //
+            strReturn = ex.Message;
+
+            #endregion
+        }
+        finally
+        {
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "release : start");
+            #region release.
+
+            // release.
+            //
+            if (objDr != null)
+                objDr.Close();
+            if (objCon != null)
+                objCon.Close();
+            if (objExcel != null)
+            {
+                objExcel.Workbooks.Close();
+                objExcel.Quit();
+                if (objExcel != null)
+                {
+                    System.Diagnostics.Process[] pProcess;
+                    pProcess = System.Diagnostics.Process.GetProcessesByName("Excel");
+                    pProcess[0].Kill();
+                }
+            }
+
+            #endregion
+            Err.ErrorLog(HttpContext.Current.Server.MapPath("~/Logs/Debug"), "release : end");
+        }
+
+        return strReturn;
+    }
+
+    #endregion
+}

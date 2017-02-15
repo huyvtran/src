@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsEHM" targetNamespace="http://tempuri.org/dsEHM.xsd" xmlns:mstns="http://tempuri.org/dsEHM.xsd" xmlns="http://tempuri.org/dsEHM.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsEHM" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="dsEHM" msprop:Generator_UserDSName="dsEHM">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IssueStock_Barcode" msprop:Generator_TableClassName="IssueStock_BarcodeDataTable" msprop:Generator_TableVarName="tableIssueStock_Barcode" msprop:Generator_TablePropName="IssueStock_Barcode" msprop:Generator_RowDeletingName="IssueStock_BarcodeRowDeleting" msprop:Generator_RowChangingName="IssueStock_BarcodeRowChanging" msprop:Generator_RowEvHandlerName="IssueStock_BarcodeRowChangeEventHandler" msprop:Generator_RowDeletedName="IssueStock_BarcodeRowDeleted" msprop:Generator_UserTableName="IssueStock_Barcode" msprop:Generator_RowChangedName="IssueStock_BarcodeRowChanged" msprop:Generator_RowEvArgName="IssueStock_BarcodeRowChangeEvent" msprop:Generator_RowClassName="IssueStock_BarcodeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="stock_no" msprop:Generator_ColumnVarNameInTable="columnstock_no" msprop:Generator_ColumnPropNameInRow="stock_no" msprop:Generator_ColumnPropNameInTable="stock_noColumn" msprop:Generator_UserColumnName="stock_no" type="xs:string" minOccurs="0" />
+              <xs:element name="part_cd" msprop:Generator_ColumnVarNameInTable="columnpart_cd" msprop:Generator_ColumnPropNameInRow="part_cd" msprop:Generator_ColumnPropNameInTable="part_cdColumn" msprop:Generator_UserColumnName="part_cd" type="xs:string" minOccurs="0" />
+              <xs:element name="part_nm" msprop:Generator_ColumnVarNameInTable="columnpart_nm" msprop:Generator_ColumnPropNameInRow="part_nm" msprop:Generator_ColumnPropNameInTable="part_nmColumn" msprop:Generator_UserColumnName="part_nm" type="xs:string" minOccurs="0" />
+              <xs:element name="part_spec" msprop:Generator_ColumnVarNameInTable="columnpart_spec" msprop:Generator_ColumnPropNameInRow="part_spec" msprop:Generator_ColumnPropNameInTable="part_specColumn" msprop:Generator_UserColumnName="part_spec" type="xs:string" minOccurs="0" />
+              <xs:element name="rqst_dt" msprop:Generator_ColumnVarNameInTable="columnrqst_dt" msprop:Generator_ColumnPropNameInRow="rqst_dt" msprop:Generator_ColumnPropNameInTable="rqst_dtColumn" msprop:Generator_UserColumnName="rqst_dt" type="xs:string" minOccurs="0" />
+              <xs:element name="proj_no" msprop:Generator_ColumnVarNameInTable="columnproj_no" msprop:Generator_ColumnPropNameInRow="proj_no" msprop:Generator_ColumnPropNameInTable="proj_noColumn" msprop:Generator_UserColumnName="proj_no" type="xs:string" minOccurs="0" />
+              <xs:element name="issue_no" msprop:Generator_ColumnVarNameInTable="columnissue_no" msprop:Generator_ColumnPropNameInRow="issue_no" msprop:Generator_ColumnPropNameInTable="issue_noColumn" msprop:Generator_UserColumnName="issue_no" type="xs:string" minOccurs="0" />
+              <xs:element name="rqst_qty" msprop:Generator_ColumnVarNameInTable="columnrqst_qty" msprop:Generator_ColumnPropNameInRow="rqst_qty" msprop:Generator_ColumnPropNameInTable="rqst_qtyColumn" msprop:Generator_UserColumnName="rqst_qty" type="xs:string" minOccurs="0" />
+              <xs:element name="bonded_yn_nm" msprop:Generator_ColumnVarNameInTable="columnbonded_yn_nm" msprop:Generator_ColumnPropNameInRow="bonded_yn_nm" msprop:Generator_ColumnPropNameInTable="bonded_yn_nmColumn" msprop:Generator_UserColumnName="bonded_yn_nm" type="xs:string" minOccurs="0" />
+              <xs:element name="ser_no" msprop:Generator_ColumnVarNameInTable="columnser_no" msprop:Generator_ColumnPropNameInRow="ser_no" msprop:Generator_ColumnPropNameInTable="ser_noColumn" msprop:Generator_UserColumnName="ser_no" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
